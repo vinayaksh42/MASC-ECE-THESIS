@@ -1,0 +1,106 @@
+%======================================================================
+\chapter{Introduction}
+%======================================================================
+% look for citations about library usage
+In the recent decades, the use of software libraries is becoming more and more prominent
+as software libraries integration in the programs allows the developers to develop the
+software more effectively, further, sometime these software are required to be integrated
+with the updated versions of libraries and their components, this allows the developers to
+upgrade and reuse the software.
+
+Software libraries are developed, maintained and upgraded by a range of contributors
+that includes: (i) Individual developers, (ii) Open-source communities, (iii) Companies
+(such as Google, Facebook, and Microsoft) and (iv) Academic and Research institutions.
+The role of these contributors is to create libraries to meet specific needs and their
+refinement over the period of time. Others focus on managing community contributions,
+maintaining code quality, and integrating updates. These roles ensure that libraries
+remain reliable and up to date.
+
+The dependence on software libraries has increased over time because of the increase in open source software (OSS) movement and the huge increase in software libraries on repository ecosystems such as npm for JavaScript, PyPI for Python, MAVEN for Java, and CRAN for R. Therefore, software development has become a highly modular activity and has a huge reliance on third-party libraries~\cite{decan2019empirical, kalliamvakou2014promises, zerouali2019formal, cox2019surviving}. However, libraries developed by others are
+also updated by others, on schedules that are not controlled by the client developers.
+
+% Especially when one is developing software that is exposed to the Internet, one
+% has a responsibility to incorporate security updates for the
+% libraries that one is using as a client~\cite{wu23:_under_threat_upstr_vulner_downs}, or else risk vulnerabilities
+% being exposed in one's software~\cite{haryono22:_autom_ident_librar_vulner_data,zhan21:_atvhun,alfadel23:_empir_python}. 
+% The obligation to update libraries is a form of technical debt that accrues automatically with the passage of time.
+
+When a client develops software exposed to the internet, they become responsible for ensuring that the application integrates security updates for all utilized software libraries~\cite{wu23:_under_threat_upstr_vulner_downs}. Failing to apply the latest updates can leave the application vulnerable to well-known security threats such as Log4Shell (Log4j), Heartbleed (OpenSSL), and similar critical vulnerabilities~\cite{haryono22:_autom_ident_librar_vulner_data,zhan21:_atvhun,alfadel23:_empir_python}. As such, clients must regularly update third-party libraries, since neglecting updates constitutes a form of technical debt that accumulates automatically over time. Further, as these libraries are often developed and updated by
+professionals other than the software developers who integrate them into their own
+applications; while libraries allow developers to add functionality without building it
+from scratch, updates may introduce behavioural changes that can lead to unexpected
+outputs, potentially affecting the performance and results of the software. [20, 53].
+
+% should we cite our Onward 2020 paper here?
+% However, upgrading libraries is not painless~\cite{elizalde18:_towar_smoot_librar_migrat,derr17:_keep,dann23:_upcy}: new
+% versions of libraries may include  breaking \gls{api} changes~\cite{dietrich14:_broken}, requiring developers to verify that their own client
+% code continues working with the new library versions. This is
+% inconvenient at best and can require nontrivial amounts of software development at worst,
+% often without the reward of useful new features for the client software---reacting to upgrades
+% just allows the client software to continue working, in a hopefully less-vulnerable
+% state. 
+
+However, upgrading a library to the latest version is not painless~\cite{elizalde18:_towar_smoot_librar_migrat,derr17:_keep,dann23:_upcy}: New versions of libraries can include breaking \gls{api} changes~\cite{dietrich14:_broken}. In the case of method signature-related breaking changes in a Java \gls{api}, the library developer might have changed the signatures of public methods, retractions of
+formerly-existing methods, or even syntactic changes to library method
+implementations. In the case of non-method signature-related breaking changes in a Java API, they can cause behavioral changes in the client application. A behavioral breaking change caused by a non-method signature change can result from modified function logic or a newly added unchecked exception in the function. These breaking changes require developers to verify that their own client code works as intended after they update the library used in the application. Upgrading the library can be inconvenient at best and may require nontrivial changes in the client code at worst. Developers make these changes to ensure that the client code continues to work the way they want it to, not to add a new feature. Keeping libraries upgraded ensures that the client code continues to work properly, and hopefully in a less-vulnerable manner. 
+
+Compilers and simple static
+checkers (including japicmp\footnote{https://github.com/siom79/japicmp} and Revapi\footnote{https://revapi.org/revapi-site/main/index.html} for Java as well as \cite{brito18:_apidif,foo18:_effic_static_check_librar_updat})
+can verify the absence of syntactic breaking changes in libraries. The situation is worse for semantic/behavioural breaking changes:
+there do not exist techniques for reliably detecting such changes. Of
+course, in its full generality, the problem is undecidable, though
+breaking change detection could be estimated using static and dynamic program analysis
+techniques. One such technique has been implemented by CompCheck~\cite{CompCheck}. The tool utilizes pre-written test cases present in the client code and runs them while updating the library versions to find \gls{bbc}. Then, the tool uses the pattern in which the \gls{api} was used to perform pattern matching and identify more clients that may have a \gls{bbc}.
+
+In this work, we contribute a novel way to detect one type of \gls{bbc} in a library. Our approach enables client developers to inspect relevant changes to the set of unchecked exceptions that a Java library may throw—particularly by the \gls{api}s actually used by specific client code. A new unchecked exception thrown by a library constitutes a \gls{bbc}; uncaught exceptions can cause the client code to crash or exhibit unexpected behaviour. First, we collect all the \gls{api}s used by the client and analyze them for any newly added unchecked exception(s). We perform this analysis using static analysis tools and libraries such as Sootup~\cite{Karakaya24:_sootup}, Soot~\cite{vallee2010soot}, and FlowDroid~\cite{Arzt14:_flowdroid}. Then, we conduct a taint analysis to ensure that the unchecked exception is actually triggerable by the client.
+
+% Although developers tend to ignore even checked
+% exceptions~\cite{nakshatri16:_analy_java}, we contend that incrementally informing
+% developers only about relevant newly-added exceptions is likely to be more tractable, consistent with the
+% design principles of Google's Tricorder tool~\cite{sadowski15:_tricor}.
+% Thus, we leverage taint analysis
+% to reduce the number of irrelevant reports that we report to client developers.
+% We aim to show only changed library APIs that may realistically throw new exceptions
+% in updated versions of client code, minimizing the number of false positives~\cite{pashchenko20:_vuln4,pashchenko18:_vulner}.
+% We hope that our reports enable client developers to better understand how new exceptions affect their own code.
+
+Developers often ignore checked exceptions~\cite{nakshatri16:_analy_java}, but we contend that informing developers about relevant newly added exceptions as they upgrade the library is likely to be more tractable. This aligns with the design principles of Google’s Tricorder tool~\cite{sadowski15:_tricor}. Therefore, we utilize taint analysis to reduce the number of false positive reports sent to client developers. By doing so, the number of reported \gls{api}s shown to the client includes only those that may realistically throw new exceptions in updated versions of the client code, minimizing false positives~\cite{pashchenko20:_vuln4,pashchenko18:_vulner}. We hope that our reports help client developers better understand how new exceptions affect their own code. In the present work, Java has been taken as a case study due to its widespread
+use across diverse domains, driven by its platform independence, robustness, and scalability. It is commonly used in web and enterprise applications, Android development,
+desktop software, and big data tools like Hadoop. Java also finds applications in cloud
+computing, scientific research, and embedded systems through Java ME.
+
+
+\newpage
+We explore the following research questions:
+
+\noindent
+{\bf RQ1.} How often do published changes to Java libraries throw new unchecked exceptions in methods,
+and under what circumstances do such exceptions occur (e.g. major/minor/patch versions)?
+
+\noindent
+{\bf RQ2.} Do library clients, in practice, call methods with new added exceptions, and is it possible for the clients to trigger these exceptions? Is it possible to write client test cases that trigger the exceptions?
+
+In our corpus of 69 distinct libraries, we found 24 libraries with newly-added exceptions, including exceptions that are added in non-major releases.
+We then investigated 99 client-library pairs to explore the prevalence of potentially breaking behavioural changes.
+We found that new potentially client-relevant unchecked exceptions occured in 8 of the 69 libraries, and that clients called methods reaching these exceptions at 49 client callsites.
+This shows that client applications do in fact call library methods that throw these new exceptions.
+Furthermore, we demonstrated that it is possible to trigger these exceptions by writing test cases using methods from the client.
+
+The contributions of this work are as follows:
+
+\begin{itemize}
+    \item We implement the \textit{UnCheckGuard} static analysis tool, which traverses bytecode to find newly-added exceptions and filters them using taint analysis, to report relevant newly added unchecked exceptions.
+    \item We conduct an empirical study of libraries to detect potential behavioural breaking changes in libraries caused by newly added unchecked exceptions.
+    \item We evaluate 99 client-library pairs from the DUETS dataset~\cite{durieux21:_duets} using \textit{UnCheckGuard}, identifying 49 call sites where libraries' newly added unchecked exceptions could cause behavioural breaking changes in clients, and write test cases showing that the exceptions can be triggered from client code.
+\end{itemize}
+
+The present thesis is organized as follows:
+\begin{itemize}
+    \item \textbf{Chapter 1} introduces the topic, explains our motivation for selecting it, frames the research questions, and outlines the organization of the thesis.
+    \item \textbf{Chapter 2} provides background relevant to the research, identifies behavioural issues arising from library updates, and examines their impact on client software and performance.
+    \item \textbf{Chapter 3} presents a motivating example.
+    \item \textbf{Chapter 4} describes how we collected and processed the data used in this research.
+    \item \textbf{Chapter 5} details the methodology. It explains how we identified the \gls{api} methods used by a client and ran analysis to determine whether any newly added exceptions are triggerable.
+    \item \textbf{Chapter 6} presents the results of this research and discusses the implications for developers.
+    \item \textbf{Chapter 7} reviews related work in this area of research.
+\end{itemize}

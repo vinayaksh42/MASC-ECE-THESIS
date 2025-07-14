@@ -1,0 +1,163 @@
+% T I T L E   P A G E
+% -------------------
+% Last updated August 24, 2023, by IST-Client Services
+% The title page is counted as page `i' but we need to suppress the
+% page number. Also, we don't want any headers or footers.
+\pagestyle{empty}
+\pagenumbering{roman}
+
+% The contents of the title page are specified in the "titlepage"
+% environment.
+\begin{titlepage}
+        \begin{center}
+        \vspace*{1.0cm}
+
+        \Huge
+        {\bf Detecting Unchecked Exception-Related Behavioural Breaking Changes with UnCheckGuard }
+
+        \vspace*{1.0cm}
+
+        \normalsize
+        by \\
+
+        \vspace*{1.0cm}
+
+        \Large
+        Vinayak Sharma \\
+
+        \vspace*{3.0cm}
+
+        \normalsize
+        A thesis \\
+        presented to the University of Waterloo \\ 
+        in fulfillment of the \\
+        thesis requirement for the degree of \\
+        Master of Applied Science \\
+        in \\
+        Electrical and Computer Engineering \\
+
+        \vspace*{1.0cm}
+
+        Waterloo, Ontario, Canada, 2025 \\
+
+        \vspace*{1.0cm}
+
+        \copyright\ Vinayak Sharma 2025 \\
+        \end{center}
+\end{titlepage}
+
+% The rest of the front pages should contain no headers and be numbered using Roman numerals starting with `ii'
+\pagestyle{plain}
+\setcounter{page}{2}
+
+\cleardoublepage % Ends the current page and causes all figures and tables that have so far appeared in the input to be printed.
+% In a two-sided printing style, it also makes the next page a right-hand (odd-numbered) page, producing a blank page if necessary.
+\phantomsection    % allows hyperref to link to the correct page
+ 
+
+% D E C L A R A T I O N   P A G E
+% -------------------------------
+  % The following is a sample Declaration Page as provided by the GSPA
+  % December 13th, 2006.  It is designed for an electronic thesis.
+ \addcontentsline{toc}{chapter}{Author's Declaration}
+ \begin{center}\textbf{Author's Declaration}\end{center}
+
+ % Author's Declaration Option ONE - line 118:  
+ \noindent
+This thesis consists of material all of which I authored or co-authored: see Statement of
+Contributions included in the thesis. This is a true copy of the thesis, including any required final revisions, as accepted by my examiners.
+  % Author's Declaration Option TWO - line 121. Updated August 21st, 2023. Use the following declaration text if appropriate by removing the percent character and space at the beginning of line 121, and add a percent symbol and space at line 118 to change Author's Declaration Option ONE to a remark that is not printed.
+ \noindent  
+% This thesis consists of material all of which I authored or co-authored: see Statement of Contributions included in the thesis. This is a true copy of the thesis, including any required final revisions, as accepted by my examiners.
+  \bigskip
+  
+  \noindent
+I understand that my thesis may be made electronically available to the public.
+
+\cleardoublepage
+\phantomsection    % allows hyperref to link to the correct page
+
+% A B S T R A C T
+% ---------------
+\addcontentsline{toc}{chapter}{Abstract}
+\begin{center}\textbf{Abstract}\end{center}
+
+      The ubiquitous use of third-party libraries in software development has enabled developers to quickly add
+      new functionality to their client software. Unfortunately, library usage also carries a cost in
+      terms of software maintenance: library upgrades may include breaking changes, in which client expectations
+      about library behaviour are no longer met in new library versions. Behavioural breaking
+      changes can be particularly insidious, and in their full generality, could require sophisticated program
+      analysis techniques to (approximately) detect.
+
+      In this work, we present our UnCheckGuard tool, which detects a class of behavioural breaking changes---those
+      related to exceptions thrown by Java libraries. UnCheckGuard analyzes both sides of the library/client
+      duet. On the library side, UnCheckGuard creates a list of new exceptions that may be thrown by methods
+      in a library's public API, including by its transitive callees. On the client side, UnCheckGuard identifies
+      client methods that call library methods with new exceptions. To reduce false positives, UnCheckGuard
+      additionally filters out new exceptions that cannot be triggered by particular clients, using taint analysis. It therefore can be
+      used by client developers as a tool to screen library updates for relevant incompatibilities.
+
+      We have evaluated UnCheckGuard on 69 libraries and 99 library-client pairs drawn from the DUETS collection
+      and found 8 libraries with newly-added exceptions, as well as 49 callsites to library methods which,
+      when upgraded to the latest version, may introduce
+      a behavioural breaking change in the client due to a newly added unchecked exception. These findings
+      highlight the practical value of UnCheckGuard in identifying exception-related incompatibilities
+      introduced by library upgrades.
+
+\cleardoublepage
+\phantomsection    % allows hyperref to link to the correct page
+
+% A C K N O W L E D G E M E N T S
+% -------------------------------
+\addcontentsline{toc}{chapter}{Acknowledgements}
+\begin{center}\textbf{Acknowledgements}\end{center}
+
+First and foremost, I would like to thank Dr. Patrik Lam for his unwavering support throughout every stage of my master's journey. His constant positivity and encouragement toward excellence made it possible for me to work on such an interesting topic. From narrowing down the research focus to perfecting the tool, he has guided me at every step of the research process. His mentorship has not only shaped the direction of my thesis but has also played a significant role in my growth as a researcher and academic.
+
+I would also like to thank my parents and my sister for their continuous support. As professors, my parents have always inspired me to strive for academic excellence and have been a constant source of motivation throughout my life. My sister, in particular, has provided me with valuable advice on how to improve academically, which has been instrumental during this journey.
+
+I am also grateful to the friends and individuals I have met along the way, whose support and encouragement have contributed to both my personal and academic well-being during this time.
+
+Lastly, I would like to thank Dr. Weiyi Shang and Dr. Derek Rayside for their time and thoughtful feedback in reviewing my thesis.
+\cleardoublepage
+\phantomsection    % allows hyperref to link to the correct page
+
+
+% T A B L E   O F   C O N T E N T S
+% ---------------------------------
+\renewcommand\contentsname{Table of Contents}
+\tableofcontents
+\cleardoublepage
+\phantomsection    % allows hyperref to link to the correct page
+
+% L I S T   O F   F I G U R E S
+% -----------------------------
+\addcontentsline{toc}{chapter}{List of Figures}
+\listoffigures
+\cleardoublepage
+\phantomsection		% allows hyperref to link to the correct page
+
+% L I S T   O F   T A B L E S
+% ---------------------------
+\addcontentsline{toc}{chapter}{List of Tables}
+\listoftables
+\cleardoublepage
+\phantomsection		% allows hyperref to link to the correct page
+
+% L I S T   O F   A B B R E V I A T I O N S
+% ---------------------------
+\renewcommand*{\abbreviationsname}{List of Abbreviations}
+\printglossary[type=abbreviations]
+\cleardoublepage
+\phantomsection		% allows hyperref to link to the correct page
+
+% L I S T   O F   S Y M B O L S
+% ---------------------------
+\printglossary[type=symbols]
+\cleardoublepage
+\phantomsection		% allows hyperref to link to the correct page
+
+
+% Change page numbering back to Arabic numerals
+\pagenumbering{arabic}
+

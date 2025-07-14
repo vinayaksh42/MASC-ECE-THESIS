@@ -1,0 +1,646 @@
+% Bibliography of key references for "LaTeX for Thesis and Large Documents"
+% For use with BibTeX
+
+@INPROCEEDINGS{durieux21:_duets,
+  author={Durieux, Thomas and Soto-Valero, César and Baudry, Benoit},
+  booktitle={2021 IEEE/ACM 18th International Conference on Mining Software Repositories (MSR)}, 
+  title={Duets: A Dataset of Reproducible Pairs of {Java} Library-Clients}, 
+  year=2021,
+  pages={545-549},
+  keywords={Java;Software libraries;Ecosystems;Static analysis;Tools;Libraries;Data mining;Mining software repositories;software reuse;Java;Maven},
+  doi={10.1109/MSR52588.2021.00071}}
+
+@inproceedings{haryono22:_autom_ident_librar_vulner_data,
+  author    = {Haryono, Stefanus A. and Kang, Hong Jin and Sharma, Abhishek and Sharma, Asankhaya and Santosa, Andrew and Yi, Ang Ming and Lo, David},
+  booktitle = {2022 IEEE/ACM 30th International Conference on Program Comprehension (ICPC)},
+  title     = {Automated Identification of Libraries from Vulnerability Data: Can We Do Better?},
+  year      = 2022,
+  pages     = {178-189},
+  keywords  = {Training;Software libraries;Costs;Databases;XML;Predictive models;Libraries;multi-label classification;machine learning;vulnerability report},
+  doi       = {10.1145/3524610.3527893}
+}
+@article{CompCheck,
+author = {Zhu, Chenguang and Zhang, Mengshi and Wu, Xiuheng and Xu, Xiufeng and Li, Yi},
+title = {Client-Specific Upgrade Compatibility Checking via Knowledge-Guided Discovery},
+year = {2023},
+issue_date = {July 2023},
+publisher = {Association for Computing Machinery},
+address = {New York, NY, USA},
+volume = {32},
+number = {4},
+issn = {1049-331X},
+url = {https://doi.org/10.1145/3582569},
+doi = {10.1145/3582569},
+abstract = {Modern software systems are complex, and they heavily rely on external libraries developed by different teams and organizations. Such systems suffer from higher instability due to incompatibility issues caused by library upgrades. In this article, we address the problem by investigating the impact of a library upgrade on the behaviors of its clients. We developed CompCheck, an automated upgrade compatibility checking framework that generates incompatibility-revealing tests based on previous examples. CompCheck first establishes an offline knowledge base of incompatibility issues by mining from open source projects and their upgrades. It then discovers incompatibilities for a specific client project, by searching for similar library usages in the knowledge base and generating tests to reveal the problems. We evaluated CompCheck on 202 call sites of 37 open source projects and the results show that CompCheck successfully revealed incompatibility issues on 76 call sites, 72.7\% and 94.9\% more than two existing techniques, confirming CompCheck’s applicability and effectiveness.},
+journal = {ACM Trans. Softw. Eng. Methodol.},
+month = may,
+articleno = {98},
+numpages = {31},
+keywords = {test generation, compatibility, Software upgrade}
+}
+
+@inproceedings{zhan21:_atvhun,
+  author    = {Zhan, Xian and Fan, Lingling and Chen, Sen and Wu, Feng and Liu, Tianming and Luo, Xiapu and Liu, Yang},
+  title     = {{ATVHunter}: Reliable Version Detection of Third-Party Libraries for Vulnerability Identification in {Android} Applications},
+  year      = 2021,
+  isbn      = 9781450390859,
+  publisher = {IEEE Press},
+  url       = {https://doi.org/10.1109/ICSE43902.2021.00150},
+  doi       = {10.1109/ICSE43902.2021.00150},
+  abstract  = {Third-party libraries (TPLs) as essential parts in the mobile ecosystem have become one of the most significant contributors to the huge success of Android, which facilitate the fast development of Android applications. Detecting TPLs in Android apps is also important for downstream tasks, such as malware and repackaged apps identification. To identify in-app TPLs, we need to solve several challenges, such as TPL dependency, code obfuscation, precise version representation. Unfortunately, existing TPL detection tools have been proved that they have not solved these challenges very well, let alone specify the exact TPL versions.To this end, we propose a system, named ATVHunter, which can pinpoint the precise vulnerable in-app TPL versions and provide detailed information about the vulnerabilities and TPLs. We propose a two-phase detection approach to identify specific TPL versions. Specifically, we extract the Control Flow Graphs as the coarse-grained feature to match potential TPLs in the predefined TPL database, and then extract opcode in each basic block of CFG as the fine-grained feature to identify the exact TPL versions. We build a comprehensive TPL database (189,545 unique TPLs with 3,006,676 versions) as the reference database. Meanwhile, to identify the vulnerable in-app TPL versions, we also construct a comprehensive and known vulnerable TPL database containing 1,180 CVEs and 224 security bugs. Experimental results show ATVHunter outperforms state-of-the-art TPL detection tools, achieving 90.55\% precision and 88.79\% recall with high efficiency, and is also resilient to widely-used obfuscation techniques and scalable for large-scale TPL detection. Furthermore, to investigate the ecosystem of the vulnerable TPLs used by apps, we exploit ATVHunter to conduct a large-scale analysis on 104,446 apps and find that 9,050 apps include vulnerable TPL versions with 53,337 vulnerabilities and 7,480 security bugs, most of which are with high risks and are not recognized by app developers.},
+  booktitle = {Proceedings of the 43rd International Conference on Software Engineering},
+  pages     = {1695–1707},
+  numpages  = 13,
+  location  = {Madrid, Spain},
+  series    = {ICSE '21}
+}
+
+@article{arora10,
+  title     = {An empirical analysis of software vendors' patch release behavior: impact of vulnerability disclosure},
+  author    = {Arora, Ashish and Krishnan, Ramayya and Telang, Rahul and Yang, Yubao},
+  journal   = {Information Systems Research},
+  volume    = 21,
+  number    = 1,
+  pages     = {115--132},
+  year      = 2010,
+  publisher = {INFORMS}
+}
+
+@inproceedings{neuhaus07:_predic,
+  author    = {Neuhaus, Stephan and Zimmermann, Thomas and Holler, Christian and Zeller, Andreas},
+  title     = {Predicting vulnerable software components},
+  year      = 2007,
+  isbn      = 9781595937032,
+  publisher = {Association for Computing Machinery},
+  address   = {New York, NY, USA},
+  url       = {https://doi.org/10.1145/1315245.1315311},
+  doi       = {10.1145/1315245.1315311},
+  abstract  = {Where do most vulnerabilities occur in software? Our Vulture tool automatically mines existing vulnerability databases and version archives to map past vulnerabilities to components. The resulting ranking of the most vulnerable components is a perfect base for further investigations on what makes components vulnerable.In an investigation of the Mozilla vulnerability history, we surprisingly found that components that had a single vulnerability in the past were generally not likely to have further vulnerabilities. However, components that had similar imports or function calls were likely to be vulnerable.Based on this observation, we were able to extend Vulture by a simple predictor that correctly predicts about half of all vulnerable components, and about two thirds of all predictions are correct. This allows developers and project managers to focus their their efforts where it is needed most: "We should look at nsXPInstallManager because it is likely to contain yet unknown vulnerabilities.".},
+  booktitle = {Proceedings of the 14th ACM Conference on Computer and Communications Security},
+  pages     = {529–540},
+  numpages  = 12,
+  keywords  = {prediction, software security},
+  location  = {Alexandria, Virginia, USA},
+  series    = {CCS '07}
+}
+
+@inproceedings{wu23:_under_threat_upstr_vulner_downs,
+  author    = {Wu, Yulun and Yu, Zeliang and Wen, Ming and Li, Qiang and Zou, Deqing and Jin, Hai},
+  booktitle = {Proc. ICSE 2023},
+  title     = {Understanding the Threats of Upstream Vulnerabilities to Downstream Projects in the {Maven} Ecosystem},
+  year      = 2023,
+  pages     = {1046-1058},
+  keywords  = {Codes;Databases;Source coding;Ecosystems;Estimation;Software systems;Libraries;Maven;Ecosystem Security;Vulnerability},
+  doi       = {10.1109/ICSE48619.2023.00095}
+}
+
+@inproceedings{elizalde18:_towar_smoot_librar_migrat,
+  author    = {Elizalde Zapata, Rodrigo and Kula, Raula Gaikovina and Chinthanet, Bodin and Ishio, Takashi and Matsumoto, Kenichi and Ihara, Akinori},
+  booktitle = {2018 IEEE International Conference on Software Maintenance and Evolution (ICSME)},
+  title     = {Towards Smoother Library Migrations: A Look at Vulnerable Dependency Migrations at Function Level for {npm} {JavaScript} Packages},
+  year      = 2018,
+  pages     = {559-563},
+  keywords  = {Libraries;Manuals;Ecosystems;Security;Inspection;Servers;Software;Third party libraries;Libraries updates;Libraries tracking},
+  doi       = {10.1109/ICSME.2018.00067}
+}
+
+@inproceedings{nielsen21:_modul_node,
+  title     = {Modular call graph construction for security scanning of {Node.js} applications},
+  author    = {Nielsen, Benjamin Barslev and Torp, Martin Toldam and M{\o}ller, Anders},
+  booktitle = {Proceedings of the 30th ACM SIGSOFT International Symposium on Software Testing and Analysis},
+  pages     = {29--41},
+  year      = 2021
+}
+
+@inproceedings{ponta19,
+  title        = {A manually-curated dataset of fixes to vulnerabilities of open-source software},
+  author       = {Ponta, Serena Elisa and Plate, Henrik and Sabetta, Antonino and Bezzi, Michele and Dangremont, C{\'e}dric},
+  booktitle    = {2019 IEEE/ACM 16th International Conference on Mining Software Repositories (MSR)},
+  pages        = {383--387},
+  year         = 2019,
+  organization = {IEEE}
+}
+
+@inproceedings{reif16:_call_java,
+  title     = {Call graph construction for {Java} libraries},
+  author    = {Reif, Michael and Eichberg, Michael and Hermann, Ben and Lerch, Johannes and Mezini, Mira},
+  booktitle = {Proceedings of the 2016 24th ACM SIGSOFT International Symposium on Foundations of Software Engineering},
+  pages     = {474--486},
+  year      = 2016
+}
+
+@incollection{vallee2010soot,
+  title     = {{Soot}: A {Java} bytecode optimization framework},
+  author    = {Vall{\'e}e-Rai, Raja and Co, Phong and Gagnon, Etienne and Hendren, Laurie and Lam, Patrick and Sundaresan, Vijay},
+  booktitle = {CASCON First Decade High Impact Papers},
+  pages     = {214--224},
+  year      = {2010}
+}
+
+@misc{decan17:_empir_compar_depen_networ_evolut,
+  title         = {An Empirical Comparison of Dependency Network Evolution in Seven Software Packaging Ecosystems},
+  author        = {Alexandre Decan and Tom Mens and Philippe Grosjean},
+  year          = 2017,
+  eprint        = {1710.04936},
+  archiveprefix = {arXiv},
+  primaryclass  = {cs.SE}
+}
+
+@article{huang22:_charac_java,
+  title     = {Characterizing usages, updates and risks of third-party libraries in {Java} projects},
+  author    = {Huang, Kaifeng and Chen, Bihuan and Xu, Congying and Wang, Ying and Shi, Bowen and Peng, Xin and Wu, Yijian and Liu, Yang},
+  journal   = {Empirical Software Engineering},
+  volume    = 27,
+  number    = 4,
+  pages     = 90,
+  year      = 2022,
+  publisher = {Springer}
+}
+
+@article{alfadel23:_empir_python,
+  title     = {Empirical analysis of security vulnerabilities in {Python} packages},
+  author    = {Alfadel, Mahmoud and Costa, Diego Elias and Shihab, Emad},
+  journal   = {Empirical Software Engineering},
+  volume    = 28,
+  number    = 3,
+  pages     = 59,
+  year      = 2023,
+  publisher = {Springer}
+}
+
+@inproceedings{derr17:_keep,
+  title     = {Keep me updated: An empirical study of third-party library updatability on {Android}},
+  author    = {Derr, Erik and Bugiel, Sven and Fahl, Sascha and Acar, Yasemin and Backes, Michael},
+  booktitle = {Proceedings of the 2017 ACM SIGSAC Conference on Computer and Communications Security},
+  pages     = {2187--2200},
+  year      = 2017
+}
+
+@inproceedings{ma17:_how,
+  title        = {How do developers fix cross-project correlated bugs? A case study on the {GitHub} scientific python ecosystem},
+  author       = {Ma, Wanwangying and Chen, Lin and Zhang, Xiangyu and Zhou, Yuming and Xu, Baowen},
+  booktitle    = {2017 IEEE/ACM 39th International Conference on Software Engineering (ICSE)},
+  pages        = {381--392},
+  year         = 2017,
+  organization = {IEEE}
+}
+
+@article{kula18:_do,
+  title     = {Do developers update their library dependencies? An empirical study on the impact of security advisories on library migration},
+  author    = {Kula, Raula Gaikovina and German, Daniel M and Ouni, Ali and Ishio, Takashi and Inoue, Katsuro},
+  journal   = {Empirical Software Engineering},
+  volume    = 23,
+  pages     = {384--417},
+  year      = 2018,
+  publisher = {Springer}
+}
+
+@inproceedings{wang20:_java,
+  title        = {An empirical study of usages, updates and risks of third-party libraries in {Java} projects},
+  author       = {Wang, Ying and Chen, Bihuan and Huang, Kaifeng and Shi, Bowen and Xu, Congying and Peng, Xin and Wu, Yijian and Liu, Yang},
+  booktitle    = {2020 IEEE International Conference on Software Maintenance and Evolution (ICSME)},
+  pages        = {35--45},
+  year         = 2020,
+  organization = {IEEE}
+}
+
+@inproceedings{ma20:_impac,
+  title     = {Impact analysis of cross-project bugs on software ecosystems},
+  author    = {Ma, Wanwangying and Chen, Lin and Zhang, Xiangyu and Feng, Yang and Xu, Zhaogui and Chen, Zhifei and Zhou, Yuming and Xu, Baowen},
+  booktitle = {Proceedings of the ACM/IEEE 42nd International Conference on Software Engineering},
+  pages     = {100--111},
+  year      = 2020
+}
+
+@inproceedings{plate15:_impac,
+  title        = {Impact assessment for vulnerabilities in open-source software libraries},
+  author       = {Plate, Henrik and Ponta, Serena Elisa and Sabetta, Antonino},
+  booktitle    = {2015 IEEE International Conference on Software Maintenance and Evolution (ICSME)},
+  pages        = {411--420},
+  year         = 2015,
+  organization = {IEEE}
+}
+
+@article{pashchenko20:_vuln4,
+  title     = {Vuln4real: A methodology for counting actually vulnerable dependencies},
+  author    = {Pashchenko, Ivan and Plate, Henrik and Ponta, Serena Elisa and Sabetta, Antonino and Massacci, Fabio},
+  journal   = {IEEE Transactions on Software Engineering},
+  volume    = 48,
+  number    = 5,
+  pages     = {1592--1609},
+  year      = 2020,
+  publisher = {IEEE}
+}
+
+@inproceedings{pashchenko18:_vulner,
+  title     = {Vulnerable open source dependencies: Counting those that matter},
+  author    = {Pashchenko, Ivan and Plate, Henrik and Ponta, Serena Elisa and Sabetta, Antonino and Massacci, Fabio},
+  booktitle = {Proceedings of the 12th ACM/IEEE international symposium on empirical software engineering and measurement},
+  pages     = {1--10},
+  year      = 2018
+}
+
+@inproceedings{ponta18:_beyon,
+  title        = {Beyond metadata: Code-centric and usage-based analysis of known vulnerabilities in open-source software},
+  author       = {Ponta, Serena Elisa and Plate, Henrik and Sabetta, Antonino},
+  booktitle    = {2018 IEEE International Conference on Software Maintenance and Evolution (ICSME)},
+  pages        = {449--460},
+  year         = 2018,
+  organization = {IEEE}
+}
+
+@inproceedings{pashchenko20,
+  title     = {A qualitative study of dependency management and its security implications},
+  author    = {Pashchenko, Ivan and Vu, Duc-Ly and Massacci, Fabio},
+  booktitle = {Proceedings of the 2020 ACM SIGSAC conference on computer and communications security},
+  pages     = {1513--1531},
+  year      = 2020
+}
+
+@inproceedings{alfadel21,
+  title        = {On the use of dependabot security pull requests},
+  author       = {Alfadel, Mahmoud and Costa, Diego Elias and Shihab, Emad and Mkhallalati, Mouafak},
+  booktitle    = {2021 IEEE/ACM 18th International Conference on Mining Software Repositories (MSR)},
+  pages        = {254--265},
+  year         = 2021,
+  organization = {IEEE}
+}
+
+@inproceedings{zhang23:_mitig_maven,
+  title        = {Mitigating persistence of open-source vulnerabilities in {Maven} ecosystem},
+  author       = {Zhang, Lyuye and Liu, Chengwei and Chen, Sen and Xu, Zhengzi and Fan, Lingling and Zhao, Lida and Zhang, Yiran and Liu, Yang},
+  booktitle    = {2023 38th IEEE/ACM International Conference on Automated Software Engineering (ASE)},
+  pages        = {191--203},
+  year         = 2023,
+  organization = {IEEE}
+}
+
+@inproceedings{zhao23:_softw,
+  title     = {Software composition analysis for vulnerability detection: An empirical study on {Java} projects},
+  author    = {Zhao, Lida and Chen, Sen and Xu, Zhengzi and Liu, Chengwei and Zhang, Lyuye and Wu, Jiahui and Sun, Jun and Liu, Yang},
+  booktitle = {Proceedings of the 31st ACM Joint European Software Engineering Conference and Symposium on the Foundations of Software Engineering},
+  pages     = {960--972},
+  year      = 2023
+}
+
+@inproceedings{sangaroonsilp23:_privac_weakn_vulner_softw_system,
+  title        = {On Privacy Weaknesses and Vulnerabilities in Software Systems},
+  author       = {Sangaroonsilp, Pattaraporn and Dam, Hoa Khanh and Ghose, Aditya},
+  booktitle    = {2023 IEEE/ACM 45th International Conference on Software Engineering (ICSE)},
+  pages        = {1071--1083},
+  year         = 2023,
+  organization = {IEEE}
+}
+
+@inproceedings{sui20,
+  author    = {Sui, Li and Dietrich, Jens and Tahir, Amjed and Fourtounis, George},
+  title     = {On the recall of static call graph construction in practice},
+  year      = 2020,
+  isbn      = 9781450371216,
+  publisher = {Association for Computing Machinery},
+  address   = {New York, NY, USA},
+  url       = {https://doi.org/10.1145/3377811.3380441},
+  doi       = {10.1145/3377811.3380441},
+  abstract  = {Static analyses have problems modelling dynamic language features soundly while retaining acceptable precision. The problem is well-understood in theory, but there is little evidence on how this impacts the analysis of real-world programs. We have studied this issue for call graph construction on a set of 31 real-world Java programs using an oracle of actual program behaviour recorded from executions of built-in and synthesised test cases with high coverage, have measured the recall that is being achieved by various static analysis algorithms and configurations, and investigated which language features lead to static analysis false negatives.We report that (1) the median recall is 0.884 suggesting that standard static analyses have significant gaps with respect to the proportion of the program modelled (2) built-in tests are significantly better to expose dynamic program behaviour than synthesised tests (3) adding precision to the static analysis has little impact on recall indicating that those are separate concerns (4) state-of-the-art support for dynamic language features can significantly improve recall (the median observed is 0.935), but it comes with a hefty performance penalty, and (5) the main sources of unsoundness are not reflective method invocations, but objects allocated or accessed via native methods, and invocations initiated by the JVM, without matching call sites in the program under analysis.These results provide some novel insights into the interaction between static and dynamic program analyses that can be used to assess the utility of static analysis results and to guide the development of future static and hybrid analyses.},
+  booktitle = {Proceedings of the ACM/IEEE 42nd International Conference on Software Engineering},
+  pages     = {1049–1060},
+  numpages  = 12,
+  keywords  = {testing, test case generation, static program analysis, soundness, call graph construction, Java},
+  location  = {Seoul, South Korea},
+  series    = {ICSE '20}
+}
+
+@article{livshits15:_in,
+  author     = {Livshits, Benjamin and Sridharan, Manu and Smaragdakis, Yannis and Lhot\'{a}k, Ond\v{r}ej and Amaral, J. Nelson and Chang, Bor-Yuh Evan and Guyer, Samuel Z. and Khedker, Uday P. and M\o{}ller, Anders and Vardoulakis, Dimitrios},
+  title      = {In defense of soundiness: a manifesto},
+  year       = 2015,
+  issue_date = {February 2015},
+  publisher  = {Association for Computing Machinery},
+  address    = {New York, NY, USA},
+  volume     = 58,
+  number     = 2,
+  issn       = {0001-0782},
+  url        = {https://doi.org/10.1145/2644805},
+  doi        = {10.1145/2644805},
+  abstract   = {Soundy is the new sound.},
+  journal    = {Commun. ACM},
+  month      = {jan},
+  pages      = {44–46},
+  numpages   = 3
+}
+
+% "On Privacy Weaknesses and Vulnerabilities in Software Systems" (DOI 10.1109/ICSE48619.2023.00097)
+
+@inproceedings{lam20:_puttin_seman_seman_version,
+  author    = {Patrick Lam and Jens Dietrich and David J. Pearce},
+  title     = {Putting the Semantics into Semantic Versioning},
+  booktitle = {Onward! Essays},
+  year      = 2020,
+  location  = {Virtual event},
+  numpages  = 21
+} 
+
+@article{soto-valero21:_maven,
+  title     = {A comprehensive study of bloated dependencies in the {Maven} ecosystem},
+  author    = {Soto-Valero, C{\'e}sar and Harrand, Nicolas and Monperrus, Martin and Baudry, Benoit},
+  journal   = {Empirical Software Engineering},
+  volume    = 26,
+  number    = 3,
+  pages     = 45,
+  year      = 2021,
+  publisher = {Springer}
+}
+
+@inproceedings{dietrich19:_depen,
+  title        = {Dependency versioning in the wild},
+  author       = {Dietrich, Jens and Pearce, David and Stringer, Jacob and Tahir, Amjed and Blincoe, Kelly},
+  booktitle    = {2019 IEEE/ACM 16th International Conference on Mining Software Repositories (MSR)},
+  pages        = {349--359},
+  year         = 2019,
+  organization = {IEEE}
+}
+
+@article{sadowski18:_lesson_googl,
+  title     = {Lessons from building static analysis tools at {Google}},
+  author    = {Sadowski, Caitlin and Aftandilian, Edward and Eagle, Alex and Miller-Cushon, Liam and Jaspan, Ciera},
+  journal   = {Communications of the ACM},
+  volume    = 61,
+  number    = 4,
+  pages     = {58--66},
+  year      = 2018,
+  publisher = {ACM New York, NY, USA}
+}
+
+@article{distefano19:_scalin_faceb,
+  title     = {Scaling static analyses at {Facebook}},
+  author    = {Distefano, Dino and F{\"a}hndrich, Manuel and Logozzo, Francesco and O'Hearn, Peter W},
+  journal   = {Communications of the ACM},
+  volume    = 62,
+  number    = 8,
+  pages     = {62--70},
+  year      = 2019,
+  publisher = {ACM New York, NY, USA}
+}
+
+
+
+
+@InProceedings{bacon96:_fast_static_analy_c_virtual_funct_calls,
+  author = 	 {David F. Bacon and Peter F. Sweeney},
+  title = 	 {Fast Static Analysis of {C++} Virtual Function Calls},
+  booktitle = {OOPSLA},
+  year = 	 1996}
+
+@inproceedings{grove97:_call,
+  title     = {Call graph construction in object-oriented languages},
+  author    = {Grove, David and DeFouw, Greg and Dean, Jeffrey and Chambers, Craig},
+  booktitle = {Proceedings of the 12th ACM SIGPLAN conference on Object-oriented programming, systems, languages, and applications},
+  pages     = {108--124},
+  year      = 1997
+}
+
+@inproceedings{jayasuriya23:_under_break_chang_wild,
+author = {Jayasuriya, Dhanushka and Terragni, Valerio and Dietrich, Jens and Ou, Samuel and Blincoe, Kelly},
+title = {Understanding Breaking Changes in the Wild},
+year = 2023,
+isbn = 9798400702211,
+publisher = {Association for Computing Machinery},
+address = {New York, NY, USA},
+url = {https://doi.org/10.1145/3597926.3598147},
+doi = {10.1145/3597926.3598147},
+abstract = {Modern software applications rely heavily on the usage of libraries, which provide reusable functionality, to accelerate the development process. As libraries evolve and release new versions, the software systems that depend on those libraries (the clients) should update their dependencies to use these new versions as the new release could, for example, include critical fixes for security vulnerabilities. However, updating is not always a smooth process, as it can result in software failures in the clients if the new version includes breaking changes. Yet, there is little research on how these breaking changes impact the client projects in the wild. To identify if changes between two library versions cause breaking changes at the client end, we perform an empirical study on Java projects built using Maven. For the analysis, we used 18,415 Maven artifacts, which declared 142,355 direct dependencies, of which 71.60\% were not up-to-date. We updated these dependencies and found that 11.58\% of the dependency updates contain breaking changes that impact the client. We further analyzed these changes in the library which impact the client projects and examine if libraries have adhered to the semantic versioning scheme when introducing breaking changes in their releases. Our results show that changes in transitive dependencies were a major factor in introducing breaking changes during dependency updates and almost half of the detected client impacting breaking changes violate the semantic versioning scheme by introducing breaking changes in non-Major updates.},
+booktitle = {Proceedings of the 32nd ACM SIGSOFT International Symposium on Software Testing and Analysis},
+pages = {1433–1444},
+numpages = 12,
+keywords = {breaking changes, software dependency, software evolution, software libraries},
+location = {Seattle, WA, USA},
+series = {ISSTA 2023}
+}
+
+
+
+@Article{jayasuriya24,
+  author = 	 {Jayasuriya, Dhanushka and Ou, Samuel and Hegde, Saakshi and Terragni, Valerio and Dietrich, Jens and Blincoe, Kelly},
+  title = 	 {An extended study of syntactic breaking changes in the wild},
+  journal = 	 {Empirical Software Engineering},
+  year = 	 2024,
+  volume = 	 30,
+  number = 	 2,
+  month = 	 {December}}
+
+@Article{jayasuriya24:_under_apis,
+  author = 	 {Jayasuriya, Dhanushka and Terragni, Valerio and Dietrich, Jens and Blincoe, Kelly},
+  title = 	 {Understanding the impact of {APIs} behavioral breaking changes on client applications},
+  journal = 	 {Proceedings of the ACM on Software Engineering},
+  year = 	 2024,
+  volume = 	 1,
+  number = 	 FSE,
+  month = 	 {July}}
+
+@InProceedings{Karakaya24:_sootup,
+author="Karakaya, Kadiray
+and Schott, Stefan
+and Klauke, Jonas
+and Bodden, Eric
+and Schmidt, Markus
+and Luo, Linghui
+and He, Dongjie",
+editor="Finkbeiner, Bernd
+and Kov{\'a}cs, Laura",
+title="SootUp: A Redesign of the Soot Static Analysis Framework",
+booktitle="Tools and Algorithms for the Construction and Analysis of Systems",
+year="2024",
+publisher="Springer Nature Switzerland",
+address="Cham",
+pages="229--247",
+isbn="978-3-031-57246-3"
+}
+@inproceedings{Arzt14:_flowdroid,
+author = {Arzt, Steven and Rasthofer, Siegfried and Fritz, Christian and Bodden, Eric and Bartel, Alexandre and Klein, Jacques and Le Traon, Yves and Octeau, Damien and McDaniel, Patrick},
+title = {FlowDroid: precise context, flow, field, object-sensitive and lifecycle-aware taint analysis for Android apps},
+year = {2014},
+isbn = {9781450327848},
+publisher = {Association for Computing Machinery},
+address = {New York, NY, USA},
+url = {https://doi.org/10.1145/2594291.2594299},
+doi = {10.1145/2594291.2594299},
+abstract = {Today's smartphones are a ubiquitous source of private and confidential data. At the same time, smartphone users are plagued by carelessly programmed apps that leak important data by accident, and by malicious apps that exploit their given privileges to copy such data intentionally. While existing static taint-analysis approaches have the potential of detecting such data leaks ahead of time, all approaches for Android use a number of coarse-grain approximations that can yield high numbers of missed leaks and false alarms.In this work we thus present FlowDroid, a novel and highly precise static taint analysis for Android applications. A precise model of Android's lifecycle allows the analysis to properly handle callbacks invoked by the Android framework, while context, flow, field and object-sensitivity allows the analysis to reduce the number of false alarms. Novel on-demand algorithms help FlowDroid maintain high efficiency and precision at the same time.We also propose DroidBench, an open test suite for evaluating the effectiveness and accuracy of taint-analysis tools specifically for Android apps. As we show through a set of experiments using SecuriBench Micro, DroidBench, and a set of well-known Android test applications, FlowDroid finds a very high fraction of data leaks while keeping the rate of false positives low. On DroidBench, FlowDroid achieves 93\% recall and 86\% precision, greatly outperforming the commercial tools IBM AppScan Source and Fortify SCA. FlowDroid successfully finds leaks in a subset of 500 apps from Google Play and about 1,000 malware apps from the VirusShare project.},
+booktitle = {Proceedings of the 35th ACM SIGPLAN Conference on Programming Language Design and Implementation},
+pages = {259–269},
+numpages = {11},
+location = {Edinburgh, United Kingdom},
+series = {PLDI '14}
+}
+
+@InProceedings{logozzo14:_verif_modul_version,
+  author = 	 {Francesco Logozzo and Shuvendu K. Lahiri and Manuel F\"ahndrich and Sam Blackshear},
+  title = 	 {Verification Modulo Versions: Towards Usable Verification},
+  booktitle = {PLDI},
+  year = 	 2014}
+
+@Misc{preston-werner23:_seman_version,
+  author = 	 {Tom Preston-Werner},
+  title = 	 {Semantic Versioning 2.0.0},
+  year =         2023,
+  howpublished = {\url{https://semver.org}}}
+
+@InProceedings{brito18:_apidif,
+  author = 	 {Aline Brito and Laerte Xavier and Andre Hora and Marco Tulio Valente},
+  title = 	 {{APIDiff}: Detecting {API} breaking changes},
+  booktitle = {25th International Conference on Software Analysis, Evolution and Reengineering (SANER '18)},
+  year = 	 2018,
+  pages = 	 {507--511}}
+
+
+@InProceedings{dietrich14:_broken,
+  author = 	 {Jens Dietrich and Kamil Jezes and Premek Brada},
+  title = 	 {Broken promises: An empirical study into evolution problems in {Java} programs caused by library upgrades},
+  booktitle = {IEEE Conference on Software Maintenance, Reengineering, and Reverse Engineering (CSMR-WCRE 14)},
+  year = 	 2014,
+  pages = 	 {64--73}}
+
+@article{JEZEK2015129,
+title = {How Java APIs break – An empirical study},
+journal = {Information and Software Technology},
+volume = {65},
+pages = {129-146},
+year = {2015},
+issn = {0950-5849},
+doi = {https://doi.org/10.1016/j.infsof.2015.02.014},
+url = {https://www.sciencedirect.com/science/article/pii/S0950584915000506},
+author = {Kamil Jezek and Jens Dietrich and Premek Brada},
+keywords = {Binary compatibility, API evolution, Backward compatibility, Byte-code, Java},
+abstract = {Context
+It has become common practice to build programs by using libraries. While the benefits of reuse are well known, an often overlooked risk are system runtime failures due to API changes in libraries that evolve independently. Traditionally, the consistency between a program and the libraries it uses is checked at build time when the entire system is compiled and tested. However, the trend towards partially upgrading systems by redeploying only evolved library versions results in situations where these crucial verification steps are skipped. For Java programs, partial upgrades create additional interesting problems as the compiler and the virtual machine use different rule sets to enforce contracts between the providers and the consumers of APIs.
+Objective
+We have studied the extent of the problem in real world programs. We were interested in two aspects: the compatibility of API changes as libraries evolve, and the impact this has on programs using these libraries.
+Method
+This study is based on the qualitas corpus version 20120401. A data set consisting of 109 Java open-source programs and 564 program versions was used from this corpus. We have investigated two types of library dependencies: explicit dependencies to embedded libraries, and dependencies defined by symbolic references in Maven build files that are resolved at build time. We have used JaCC for API analysis, this tool is based on the popular ASM byte code analysis library.
+Results
+We found that for most of the programs we investigated, APIs are unstable as incompatible changes are common. Surprisingly, there are more compatibility problems in projects that use automated dependency resolution. However, we found only a few cases where this has an actual impact on other programs using such an API.
+Conclusion
+It is concluded that API instability is common and causes problems for programs using these APIs. Therefore, better tools and methods are needed to safeguard library evolution.}
+}
+  
+@InProceedings{foo18:_effic_static_check_librar_updat,
+  author = 	 {Darius Foo and Hendy Chua and Jason Yeo and Ang Ming Yi and Asankhaya Sharma},
+  title = 	 {Efficient Static Checking of Library Updates},
+  booktitle = {ESEC/FSE '18},
+  year = 	 2018}
+
+
+@InProceedings{møller20:_detec_locat_javas_progr_affec,
+  author = 	 {Anders Møller and Benjamin Barslev Nielsen and Martin Toldam Torp},
+  title = 	 {Detecting Locations in {JavaScript} Programs Affected by Breaking Library Changes},
+  booktitle = {Proc. ACM Program. Lang.},
+  year = 	 2020,
+  volume = 	 4,
+  number = 	 {OOPSLA},
+  pages = 	 {1--25},
+  month = 	 {November}}
+
+@InProceedings{mujahid20:_using_other_tests_ident_break_updat,
+  author = 	 {Suhaib Mujahid and Rabe Abdalkareem and Emad Shihab and Shane McIntosh},
+  title = 	 {Using Others' Tests to Identify Breaking Updates},
+  booktitle = {17th International Conference on Mining Software Repositories (MSR '20)},
+  year = 	 2020,
+  pages = 	 {466--476}}
+
+@InProceedings{xavier17:_histor_api,
+  author = 	 {Laerte Xavier and Aline Brito and Andre Hora and Marco Tulio Valente},
+  title = 	 {Historical and impact analysis of {API} breaking changes: A large-scale study},
+  booktitle = {24th International Conference on Software Analysis, Evolution and Reengineering (SANER '17)},
+  year = 	 2017,
+  pages = 	 {138--147}}
+
+
+@InProceedings{zhang22:_has,
+  author = 	 {Lyuye Zhang and Chengwei Liu and Zhengzi Xu and Sen Chen and Lingling Fan and Bihuan Chen and Yang Liu},
+  title = 	 {Has my release disobeyed semantic versioning? Static detection based on semantic differencing},
+  booktitle = {IEEE/ACM International Conference on Automated Software Engineering (ASE '22)},
+  year = 	 2022}
+
+@InProceedings{dann23:_upcy,
+  author = 	 {Andreas Dann and Ben Hermann and Eric Bodden},
+  title = 	 {{UpCy}---Safely Updating Outdated Dependencies},
+  booktitle = {ICSE '23: Proceedings of the 45th International Conference on Software Engineering},
+  year = 	 2023,
+  pages =        {233-244}}
+  
+
+@Article{kong25:_towar_better_compr_break_chang_npm_ecosy,
+  author = 	 {Denzhen Kong and Jiakun Liu and Lingfeng Bao and David Lo},
+  title = 	 {Toward Better Comprehension of Breaking Changes in the {NPM} Ecosystem},
+  journal = 	 {ACM Transactions on Software Engineering and Methodology},
+  year = 	 2025,
+  volume = 	 34,
+  number = 	 4,
+  pages = 	 {1--23}}
+
+@inproceedings{nakshatri16:_analy_java,
+author = {Nakshatri, Suman and Hegde, Maithri and Thandra, Sahithi},
+title = {Analysis of exception handling patterns in {Java} projects: an empirical study},
+year = 2016,
+isbn = 9781450341868,
+publisher = {Association for Computing Machinery},
+address = {New York, NY, USA},
+url = {https://doi.org/10.1145/2901739.2903499},
+doi = {10.1145/2901739.2903499},
+abstract = {Exception handling is a powerful tool provided by many programming languages to help developers deal with unforeseen conditions. Java is one of the few programming languages to enforce an additional compilation check on certain subclasses of the Exception class through checked exceptions. As part of this study, empirical data was extracted from software projects developed in Java. The intent is to explore how developers respond to checked exceptions and identify common patterns used by them to deal with exceptions, checked or otherwise. Bloch's book - "Effective Java" [1] was used as reference for best practices in exception handling - these recommendations were compared against results from the empirical data. Results of this study indicate that most programmers ignore checked exceptions and leave them unnoticed. Additionally, it is observed that classes higher in the exception class hierarchy are more frequently used as compared to specific exception subclasses.},
+booktitle = {Proceedings of the 13th International Conference on Mining Software Repositories},
+pages = {500–503},
+numpages = 4,
+keywords = {Boa, Github, Java exception handling, best practices},
+location = {Austin, Texas},
+series = {MSR '16}
+}
+
+  
+
+@inproceedings{sadowski15:_tricor,
+ title	= {Tricorder: Building a Program Analysis Ecosystem},
+ author	= {Caitlin Sadowski and Jeffrey van Gogh and Ciera Jaspan and Emma Soederberg and Collin Winter},
+ year	= 2015,
+ booktitle = {International Conference on Software Engineering (ICSE)}
+}
+
+@article{decan2019empirical,
+  title={An empirical comparison of dependency issues in OSS packaging ecosystems},
+  author={Decan, Alexandre and Mens, Tom and Constantinou, Eleni},
+  journal={Empirical Software Engineering},
+  volume={24},
+  number={1},
+  pages={381--416},
+  year={2019},
+  publisher={Springer}
+}
+
+@article{kalliamvakou2014promises,
+  title={The promises and perils of mining GitHub},
+  author={Kalliamvakou, Eirini and Damian, Daniela and Singer, Leif and German, Daniel M.},
+  conference={Proceedings of the 11th Working Conference on Mining Software Repositories},
+  pages={92--101},
+  year={2014},
+  publisher={ACM}
+}
+
+@article{zerouali2019formal,
+  title={Formal framework for managing software dependencies in open-source software},
+  author={Zerouali, Ahmed and Mens, Tom and Robles, Gregorio and Gonzalez-Barahona, Jesus M.},
+  journal={Information and Software Technology},
+  volume={108},
+  pages={170--186},
+  year={2019},
+  publisher={Elsevier}
+}
+
+@article{cox2019surviving,
+  title={Surviving software dependencies},
+  author={Cox, Russ},
+  journal={Communications of the ACM},
+  volume={62},
+  number={9},
+  pages={36--43},
+  year={2019},
+  publisher={ACM}
+}
