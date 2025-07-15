@@ -106,13 +106,13 @@ After UnCheckGuard collects the methods that introduce newly added exceptions in
 
 Taint analysis tracks whether any client-supplied values to the external method used by the client can reach the exception object's constructor. UnCheckGuard marks the client-supplied values as \texttt{SOURCE} and the exception object's constructor as \texttt{SINK}. If taint analysis determines that the \texttt{SOURCE} cannot reach the \texttt{SINK}, or that the \texttt{SOURCE} cannot flow into the exception-triggering logic, then UnCheckGuard does not report the case to the client, as the newly added exception will not result in a behavioural breaking change.
 
-For this case, following are marked as \texttt{SOURCE}:
+UnCheckGuard marks the following as \texttt{SOURCE}:
 \begin{itemize}
   \item \texttt{hostname}
   \item \texttt{port}
 \end{itemize}
 
-Following is marked as \texttt{SINK}:
+UnCheckGuard marks the following as the \texttt{SINK}:
 \begin{itemize}
   \item \texttt{IllegalArgumentException} found in \texttt{Args.containsNoBlanks()}
 \end{itemize}
