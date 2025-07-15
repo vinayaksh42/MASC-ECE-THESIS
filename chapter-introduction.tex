@@ -2,22 +2,25 @@
 \chapter{Introduction}
 %======================================================================
 % look for citations about library usage
-In the recent decades, the use of software libraries is becoming more and more prominent
-as software libraries integration in the programs allows the developers to develop the
-software more effectively, further, sometime these software are required to be integrated
-with the updated versions of libraries and their components, this allows the developers to
-upgrade and reuse the software.
+Software libraries are mainly collections of code components designed to be reused
+across projects at different levels, they help developers save time and effort by
+eliminating the need to rewrite code, and their functionalities can be directly integrated
+into software applications~\cite{Sawant2015APIUsage}. In the recent decades, the use of software libraries is
+becoming more and more prominent as software libraries integration in the programs
+allows the developers to develop the software more effectively~\cite{Cybulski2007requirements}. However, sometime
+the developed software are required to be integrated with the updated versions of
+libraries and their components, this allows the developers to upgrade and reuse the
+software.
 
 Software libraries are developed, maintained and upgraded by a range of contributors
 that includes: (i) Individual developers, (ii) Open-source communities, (iii) Companies
-(such as Google, Facebook, and Microsoft) and (iv) Academic and Research institutions.
-The role of these contributors is to create libraries to meet specific needs and their
-refinement over the period of time. Others focus on managing community contributions,
-maintaining code quality, and integrating updates. These roles ensure that libraries
-remain reliable and up to date.
+(such as Google, Facebook, and Microsoft) and (iv) Academic and Research
+institutions~\cite{Lakhani2000OSS}. The role of these contributors is to create libraries to meet specific needs
+and their refinement over the period of time~\cite{Decan2018npm}. Others focus on managing community
+contributions, maintaining code quality, and integrating updates. These roles ensure that
+libraries remain reliable and up to date.
 
-The dependence on software libraries has increased over time because of the increase in open source software (OSS) movement and the huge increase in software libraries on repository ecosystems such as npm for JavaScript, PyPI for Python, MAVEN for Java, and CRAN for R. Therefore, software development has become a highly modular activity and has a huge reliance on third-party libraries~\cite{decan2019empirical, kalliamvakou2014promises, zerouali2019formal, cox2019surviving}. However, libraries developed by others are
-also updated by others, on schedules that are not controlled by the client developers.
+The dependence on software libraries has increased over time because of the increase in open source software (OSS) movement and the huge increase in software libraries on repository ecosystems such as npm for JavaScript, PyPI for Python, MAVEN for Java, and CRAN for R. Therefore, software development has become a highly modular activity and has a huge reliance on third-party libraries~\cite{decan2019empirical, kalliamvakou2014promises, zerouali2019formal, cox2019surviving}. However, libraries developed by others are also updated by others, on schedules that are not controlled by the client developers.
 
 % Especially when one is developing software that is exposed to the Internet, one
 % has a responsibility to incorporate security updates for the
@@ -29,7 +32,7 @@ When a client develops software exposed to the internet, they become responsible
 professionals other than the software developers who integrate them into their own
 applications; while libraries allow developers to add functionality without building it
 from scratch, updates may introduce behavioural changes that can lead to unexpected
-outputs, potentially affecting the performance and results of the software. [20, 53].
+outputs, potentially affecting the performance and results of the software~\cite{huang22:_charac_java,wang20:_java}.
 
 % should we cite our Onward 2020 paper here?
 % However, upgrading libraries is not painless~\cite{elizalde18:_towar_smoot_librar_migrat,derr17:_keep,dann23:_upcy}: new
@@ -67,7 +70,7 @@ In this work, we contribute a novel way to detect one type of \gls{bbc} in a lib
 Developers often ignore checked exceptions~\cite{nakshatri16:_analy_java}, but we contend that informing developers about relevant newly added exceptions as they upgrade the library is likely to be more tractable. This aligns with the design principles of Google’s Tricorder tool~\cite{sadowski15:_tricor}. Therefore, we utilize taint analysis to reduce the number of false positive reports sent to client developers. By doing so, the number of reported \gls{api}s shown to the client includes only those that may realistically throw new exceptions in updated versions of the client code, minimizing false positives~\cite{pashchenko20:_vuln4,pashchenko18:_vulner}. We hope that our reports help client developers better understand how new exceptions affect their own code. In the present work, Java has been taken as a case study due to its widespread
 use across diverse domains, driven by its platform independence, robustness, and scalability. It is commonly used in web and enterprise applications, Android development,
 desktop software, and big data tools like Hadoop. Java also finds applications in cloud
-computing, scientific research, and embedded systems through Java ME.
+computing, scientific research, and embedded systems through Java ME~\cite{StromO2003Otuo}.
 
 
 \newpage
