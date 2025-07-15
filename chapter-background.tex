@@ -6,14 +6,14 @@ In this chapter we define core concepts that underpin our approach to detecting 
 
 \textbf{Java Exceptions}. Java defines two different types of exceptions: 
 \begin{itemize}
-    \item \textbf{Checked Exception}, appears in the method's signature. When a client uses an \gls{api} with a checked exception, the client either catches the exception or declares it to be thrown. The compiler checks this type of exception, as do several tools such as japicmp\footnote{https://github.com/siom79/japicmp}. 
-    \item \textbf{Unchecked Exception}, includes subclasses of RuntimeException or Error. This type of exception does not appear in the method's signature. As a result, the compiler does not check it, and static tools such as japicmp do not detect it. These exceptions can cause unexpected runtime failures when the client does not handle them correctly. This type of exceptions often gets overlooked by Client developers particularly during testing, especially when they are introduced through library upgrades. Client developers often overlook this type of exception during testing, especially when library upgrades introduce them. The silent addition of unchecked exceptions to newer versions of libraries causes most of the \gls{bbc}.
+    \item \textbf{Checked Exception}, appears in the method's signature. When a client uses an \gls{api} with a checked exception, the client either catches the exception or declares it to be thrown~\cite{Sousa2020evolution}. The compiler checks this type of exception, as do several tools such as japicmp\footnote{https://github.com/siom79/japicmp}.
+    \item \textbf{Unchecked Exception}, includes subclasses of RuntimeException or Error. This type of exception does not appear in the method's signature~\cite{Asaduzzaman2017}. As a result, the compiler does not check it, and static tools such as japicmp do not detect it. These exceptions can cause unexpected runtime failures when the client does not handle them correctly~\cite{Padua2017}. This type of exceptions often gets overlooked by Client developers particularly during testing, especially when they are introduced through library upgrades. Client developers often overlook this type of exception during testing, especially when library upgrades introduce them. The silent addition of unchecked exceptions to newer versions of libraries causes most of the \gls{bbc}~\cite{Cossette2012}.
 \end{itemize}
 
 \textbf{Breaking Changes}. We define a breaking change as a change in the library's \gls{api} that causes the client code to either break or stop functioning the way it did prior to the library upgrade. Breaking changes fall into two categories:
 \begin{itemize}
-    \item \textbf{Syntactic breaking changes}. This type of change usually occurs when the method's signature changes. Library developers may change the method's signature by removing or updating the function name, modifying the input parameters, changing the checked exception(s) associated with the function, or altering the return type. Static tools like japicmp can detect these types of method signature changes. The Java compiler also checks for these types of changes during compilation.
-    \item \textbf{Behavioural breaking changes (\gls{bbc})}. In this type of change, the syntax remains the same, but the semantics change. Various reasons can cause such changes in semantics, including updates to the function logic, addition of a new unchecked exception, or modification of an existing unchecked exception (for example, changing an \texttt{IllegalArgumentException} into a \texttt{NullPointerException}). The compiler and static tools do not detect these types of changes. They can cause the client's application to crash at runtime.
+    \item \textbf{Syntactic breaking changes}. This type of change usually occurs when the method's signature changes. Library developers may change the method's signature by removing or updating the function name, modifying the input parameters, changing the checked exception(s) associated with the function, or altering the return type~\cite{Hovemeyer2004}. Static tools like japicmp can detect these types of method signature changes. The Java compiler also checks for these types of changes during compilation.
+    \item \textbf{Behavioural breaking changes (\gls{bbc})}. In this type of change, the syntax remains the same, but the semantics change. Various reasons can cause such changes in semantics, including updates to the function logic, addition of a new unchecked exception, or modification of an existing unchecked exception (for example, changing an \texttt{IllegalArgumentException} into a \texttt{NullPointerException}). The compiler and static tools do not detect these types of changes. They can cause the client's application to crash at runtime~\cite{Cossette2012}.
 \end{itemize}
 
 \textbf{Semantic Versioning}. Software libraries generally follow semantic versioning (semver), where the version number of the library indicates the level of change. Developers structure the numbers as "MAJOR.MINOR.PATCH":
@@ -24,10 +24,42 @@ In this chapter we define core concepts that underpin our approach to detecting 
 \end{itemize}
 However, in practice, developers often introduce breaking changes even in minor or patch versions~\cite{jayasuriya24:_under_apis}. This behavior makes it especially important to create and use tools that check behavioural compatibility instead of relying solely on version numbers.
 
-\textbf{Static vs Dynamic Analysis}. \textbf{Static Analysis}. In the scenario when dynamic test cases are not present or incomplete, static analysis is utilized to examine the source code or bytecode without executing the program. \textbf{Dynamic Analysis}. In comparison, dynamic analysis runs the actual program to observe its behaviour during execution. It guarantees the detection of any runtime issue caught during execution, but it relies on test coverage and can miss particular cases when a test case is not available for that case. UnCheckGuard utilizes static analysis because many clients either lack a complete test suite or have none at all. This approach enables UnCheckGuard to analyze clients even when test cases are missing.
+\textbf{Static Analysis:} Static Analysis is debugging the source code or bytecode of a program
+without executing it, and is mainly carried out to analyze potential errors and security
+vulnerabilities~\cite{Kuszczyński2023}. It is particularly useful when dynamic test cases are not available,
+incomplete, or insufficient, and allows developers to get prior information about possible
+errors and issues that may occur during actual execution~\cite{Rahaman2023}. The main role of static
+analysis is to improve code quality by detecting bugs, logic errors, and security
+vulnerabilities~\cite{Ashwin2024}.
+
+Static analysis is particularly useful in analyzing large programs, especially those that
+incorporate multiple libraries. Its significance increases further during library upgrades,
+as it helps detect potential integration issues early by identifying compatibility problems
+and newly introduced vulnerabilities~\cite{Admiraal2024}. By providing early feedback to developers,
+static analysis reduces the likelihood of errors, thereby helping to maintain the reliability
+and performance of the software~\cite{Haonan2024}.
+
+\textbf{Dynamic Analysis:} dynamic analysis runs the actual program to observe its
+behaviour during execution. It guarantees the detection of any runtime issue caught
+during execution, but it relies on test coverage and can miss particular cases when a test
+case is not available for that case~\cite{Kuliamin2024}. Dynamic analysis is helpful in analysing software
+behaviour, it does so by analysing program operations during execution.
+
+Further, Dynamic analysis has following advantages: (i) it is capable of identifying
+real-time errors such as segmentation faults, logical inconsistencies, and abnormal state
+transitions, (ii) it minimizes false positives by reporting only those faults that actually
+occur during execution, (iii) it is particularly useful in detecting security-related issues,
+including buffer overflows, improper input handling, and unauthorized access. Dynamic
+analysis main advantage lies in analysing complex software environments where
+interactions with external libraries, concurrent processes, or variable user inputs need to
+be evaluated~\cite{Sutter2024}. Despite these advantages, dynamic analysis has certain limitations
+also and same are as follows: (i) Its effectiveness mainly depends on the test cases used;
+(ii) code string that is not executed during testing will not be analyzed for potential
+errors, and (iii) it may also be less practical for analyzing large-size software or
+applications~\cite{Somi2024}.
 
 \textbf{Taint Analysis}. It is a form of static analysis. In taint analysis, sources (for example, client input) and sinks (for example, critical operations or exceptions) are declared, and then it tracks whether the sources can reach the sinks. In the context of UnCheckGuard, the input that the client provides to the \gls{api} serves as the source, while the exceptions identified through static analysis act as sinks.  If taint analysis identifies a path from a source to a sink, UnCheckGuard marks those exceptions as actually triggerable by the client and reports them.  If taint analysis cannot find a path, it ignores those exceptions, as they are not triggerable by client input.  This process helps UnCheckGuard avoid false positives that could arise from non-triggerable exceptions.  As a result, UnCheckGuard helps developers focus on potential use cases of \gls{api}s that might cause a \gls{bbc}.
 
-\textbf{Call Graph Analysis}. In static analysis, call graphs identify the function calls that the program will make. This technique plays a fundamental role in data flow analysis, control flow analysis, dead code elimination, and taint tracking. A call graph is constructed without executing the code, using class hierarchies, method signatures, and type information. UnCheckGuard applies \textbf{Class Hierarchy Analysis} (CHA) at two different stages: first, to detect exceptions in a library’s \gls{api}, and second, to perform taint analysis. CHA assumes that any method that might be invoked based on the class hierarchy and method overrides can be called.
+\textbf{Call Graph Analysis}. In static analysis, call graphs identify the function calls that the program will make. This technique plays a fundamental role in data flow analysis, control flow analysis, dead code elimination, and taint tracking~\cite{Keshani2024}. A call graph is constructed without executing the code, using class hierarchies, method signatures, and type information. UnCheckGuard applies \textbf{Class Hierarchy Analysis} (CHA) at two different stages: first, to detect exceptions in a library’s \gls{api}, and second, to perform taint analysis. CHA assumes that any method that might be invoked based on the class hierarchy and method overrides can be called.
 
 \textbf{DUETS Dataset}. The DUETS dataset~\cite{durieux21:_duets} provides a list of real-world Java client-library pairs. Each client in the DUETS dataset has over 5 stars on GitHub. For our evaluation, we selected a convenience sample from the first few hundred clients in DUETS, rather than using the entire dataset of 147,991 clients.
