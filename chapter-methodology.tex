@@ -1,10 +1,32 @@
 %======================================================================
-\chapter{Methodology}
+\chapter{Methodology}\label{methodology}
 %======================================================================
-The previous section, Section~\ref{sec:data-collection}, described how we collected the clients and libraries, as well as the necessary information to perform our analysis.
-In this section, we describe our methodology for detecting and verifying newly added unchecked exceptions in a library when it is updated from an older version to a newer one. Our focus is on identifying the impact of such changes on client code. Specifically, we analyze client programs to detect usage of library methods that were updated to throw previously non-existent unchecked exceptions. Java distinguishes between checked exceptions, which appear as part of method signatures, and unchecked exceptions, which do not. Unchecked exceptions may therefore introduce a class of breaking changes that method signature-based syntactic approaches for Java cannot detect.
+The last chapter, Chapter~\ref{data}, described how we collected the clients and libraries, as well as the necessary information to perform our analysis. In this section, we describe our methodology for detecting and verifying newly added unchecked exceptions in a library when it is updated from an older version to a newer one. Our focus is on identifying the impact of such changes on client code. Specifically, we analyze client programs to detect usage of library methods that were updated to throw previously non-existent unchecked exceptions. Java distinguishes between checked exceptions, which appear as part of method signatures, and unchecked exceptions, which do not. Unchecked exceptions may therefore introduce a class of breaking changes that method signature-based syntactic approaches for Java cannot detect.
 
-After carrying out the data collection steps in Section~\ref{sec:data-collection} and extracting all external library methods invoked by the client, we next analyze their implementations, in both the current version and the latest version. This allows us to compare their behaviour across versions. If we find, through our analysis, that a method now throws a newly added unchecked exception in the latest version, and that the exception can be triggered from the client code, we flag a potential behavioural breaking change. To verify whether this change is in fact breaking, we currently manually write test cases to verify that the client may be affected by the newly introduced exception. We found that this was easy to do given the information that UnCheckGuard reports.
+After carrying out the data collection steps in Chapter~\ref{data} and extracting all external library methods invoked by the client, we next analyze their implementations, in both the current version and the latest version. This allows us to compare their behaviour across versions. If we find, through our analysis, that a method now throws a newly added unchecked exception in the latest version, and that the exception can be triggered from the client code, we flag a potential behavioural breaking change. To verify whether this change is in fact breaking, we currently manually write test cases to verify that the client may be affected by the newly introduced exception. We found that this was easy to do given the information that UnCheckGuard reports.
+
+\section{Problem Definition}
+
+Let $P$ be a Java client program that depends on a library $L$ at version $v_{old}$, and suppose that $L$ is later updated to version $v_{new}$. We wish to determine whether any methods in $L$ now throw \textit{new unchecked exceptions} in $v_{new}$ that did not occur in $v_{old}$, and whether such exceptions can be triggered by valid usage patterns in $P$.
+
+Formally, given:
+\begin{itemize}
+  \item A client program $P$, compiled as a JAR file;
+  \item A library $L$ in two versions: $L_{old}$ and $L_{new}$;
+  \item A set of method invocations from $P$ to $L$, denoted $\texttt{Calls}(P \rightarrow L)$;
+\end{itemize}
+
+Our task is to identify a set of pairs $(m, e)$ where:
+\begin{itemize}
+  \item $m$ is a method in $L$ that is invoked by $P$;
+  \item $e$ is a subclass of \texttt{java.lang.RuntimeException} or \texttt{java.lang.Error};
+  \item $e$ is not thrown (transitively) by $m$ in $L_{old}$, but is thrown in $L_{new}$;
+  \item There exists a path from a client-controlled input in $P$ to the exception site where $e$ is instantiated.
+\end{itemize}
+
+We refer to such pairs as \textit{client-reachable newly added unchecked exceptions}, and consider them potential behavioural breaking changes.
+
+Note that we focus exclusively on \textbf{unchecked} exceptions, which do not appear in Java method signatures. Checked exceptions are excluded from this study as they are already caught by signature-diffing tool such as JapiCmp.
 
 \section{Analysis Setup}
 
@@ -17,7 +39,7 @@ After carrying out the data collection steps in Section~\ref{sec:data-collection
 
 The analysis setup is divided into two main phases: client selection and knowledge extraction for analysis. Figure~\ref{fig:jsonjava} shows an overview of the full pipeline.
 
-As described in Section~\ref{Chapter:Data Collection}, we begin by selecting Java-based clients from the DUETS dataset~\cite{durieux21:_duets}. We retain only those clients that are Maven-compatible and successfully compile to a JAR file, ensuring compatibility with our analysis tooling.
+As described in Chapter~\ref{data}, we begin by selecting Java-based clients from the DUETS dataset~\cite{durieux21:_duets}. We retain only those clients that are Maven-compatible and successfully compile to a JAR file, ensuring compatibility with our analysis tooling.
 
 After selecting the valid clients and compiling them into JAR files, we proceed to extract relevant method-level knowledge from both the client and the current version of the libraries it depends on.
 
@@ -78,8 +100,6 @@ In the comment written by the library developer, the developer states that this 
 
 For technical reasons related to FlowDroid, we automatically generate a \textit{driver stub} for each value that the client supplies to the library. FlowDroid does not allow method parameters to be marked directly as taint sources. To work around this, we wrap each parameter in a synthetic method and mark its return value as a source.
 
-In our analysis, we mark the parameters of library methods that are invoked by the client as taint sources (in the example in Section~\ref{sec:motivating}, the \texttt{HttpHost} constructor parameters), since these are the only values under the client’s control. We also mark each exception identified in the Analysis Setup step as a potential taint sink. We use the taint analysis to estimate whether the client-supplied parameter values can trigger newly introduced exceptions. If they cannot, then the exception is effectively unreachable from the client, and thus does not constitute a behavioural breaking change. 
-
 This approach allows us to simulate tainted inputs and track their flow through the library method. Stub generation, implemented using SootUp, handles a variety of cases, including:
 \begin{itemize}
   \item Constructor methods (\texttt{<init>} using \texttt{new ClassName(...)})
@@ -105,7 +125,11 @@ public class DriverStub {
 }
 \end{lstlisting}
 
-In the above example of the driver stub, we generate a stub for library \texttt{fastjson-1.2.58}'s public \texttt{getIntValue(String)} method\footnote{Fully-qualified name: method \texttt{getIntValue(String)}, returning a \texttt{int} on class \texttt{com.alibaba.fastjson.JSONObject}}. This method has a \texttt{java.lang.String} parameter. We therefore declare a method named \texttt{source0} in the driver stub, and declare that method to be a source; FlowDroid then marks its return value as a source. We generate the way \texttt{getIntValue} is called based on the type of method it is, and obtain the properties of the method using SootUp.
+In the above example of the driver stub, we generate a stub for library \texttt{fastjson-} \texttt{1.2.58}'s public \texttt{getIntValue(String)} method\footnote{Fully-qualified name: method \texttt{getIntValue(String)}, returning a \texttt{int} on class \texttt{com.alibaba.fastjson.JSONObject}}. This method has a \texttt{java.lang.String} parameter. We therefore declare a method named \texttt{source0} in the driver stub, and declare that method to be a source; FlowDroid then marks its return value as a source. We generate the way \texttt{getIntValue} is called based on the type of method it is, and obtain the properties of the method using SootUp.
+
+
+In our analysis, we mark the parameters of library methods that are invoked by the client as taint sources (in the example in Chapter~\ref{example}, the \texttt{HttpHost} constructor parameters), since these are the only values under the client’s control. We also mark each exception identified in the Analysis Setup step as a potential taint sink. We use the taint analysis to estimate whether the client-supplied parameter values can trigger newly introduced exceptions. If they cannot, then the exception is effectively unreachable from the client, and thus does not constitute a behavioural breaking change. 
+
 
 % I think we don't need to talk about this anymore
 %% We treat each exception discovered in the RTA phase as a \textit{taint sink}. For this analysis, we intentionally construct the call graph using Class Hierarchy Analysis (CHA). Although CHA is less precise than RTA, it offers conservative coverage, reducing the risk of missing true positive flows due to aggressive pruning.
@@ -173,7 +197,16 @@ We compare exceptions using both the exception type (e.g., \texttt{java.lang.Ill
 
 Based on the information collected about newly added unchecked exceptions, we use the previously generated client-to-library method mapping to determine which client methods invoke a library method that now throws a new unchecked exception. This step allows us to identify specific call sites in the client that may be affected by behavioural breaking changes introduced in the upgraded library version.
 
-To validate the practical impact of these changes, we manually write test cases to assess whether the client can actually trigger the exception. Our goal is to write a test case that uses client code to trigger the exception.
+To validate the practical impact of these changes, we manually write test cases to assess whether the client can actually trigger the exception. Our goal is to write a test case that uses client code to trigger the exception. The client-to-library method mapping is stored in \texttt{JSON} format in the following way:
+
+\begin{lstlisting}[language=python]
+[
+    {
+        "client_method": "<waditu.tushare.common.HTTParty: java.lang.String get(java.lang.String,java.lang.String)>",
+        "external_call": "<org.apache.http.util.EntityUtils: java.lang.String toString(org.apache.http.HttpEntity,java.lang.String)>"
+    }
+]
+\end{lstlisting}
 
 We construct client-focussed test cases as follows. To understand the exception, we start from the client call site identified in the mapping and examine the library method that UnCheckGuard had flagged as containing a newly added unchecked exception. This information is available in the JSON output produced by our tool, which includes the exception type and the method signature in which it occurs. Given the exception type and method signature, we can easily find the exact exception-throwing line in the library. This enables a detailed inspection of how the exception is triggered.
 
