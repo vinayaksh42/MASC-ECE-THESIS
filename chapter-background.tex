@@ -193,8 +193,20 @@ also and same are as follows: (i) Its effectiveness mainly depends on the test c
 errors, and (iii) it may also be less practical for analyzing large-size software or
 applications~\cite{Somi2024}.
 
-\textbf{Taint Analysis}. It is a form of static analysis. In taint analysis, sources (for example, client input) and sinks (for example, critical operations or exceptions) are declared, and then it tracks whether the sources can reach the sinks. In the context of UnCheckGuard, the input that the client provides to the \gls{api} serves as the source, while the exceptions identified through static analysis act as sinks.  If taint analysis identifies a path from a source to a sink, UnCheckGuard marks those exceptions as actually triggerable by the client and reports them.  If taint analysis cannot find a path, it ignores those exceptions, as they are not triggerable by client input.  This process helps UnCheckGuard avoid false positives that could arise from non-triggerable exceptions.  As a result, UnCheckGuard helps developers focus on potential use cases of \gls{api}s that might cause a \gls{bbc}.
+\textbf{Taint Analysis}. Taint analysis is a static or dynamic program analysis technique.
+In taint analysis, sources (for example, client input) and sinks (for example, critical
+operations or exceptions) are declared, and then it tracks whether the sources can reach the sinks.
 
-\textbf{Call Graph Analysis}. In static analysis, call graphs identify the function calls that the program will make. This technique plays a fundamental role in data flow analysis, control flow analysis, dead code elimination, and taint tracking~\cite{Keshani2024}. A call graph is constructed without executing the code, using class hierarchies, method signatures, and type information. UnCheckGuard applies \textbf{Class Hierarchy Analysis} (CHA) at two different stages: first, to detect exceptions in a library’s \gls{api}, and second, to perform taint analysis. CHA assumes that any method that might be invoked based on the class hierarchy and method overrides can be called.
 
-\textbf{DUETS Dataset}. The DUETS dataset~\cite{durieux21:_duets} provides a list of real-world Java client-library pairs. Each client in the DUETS dataset has over 5 stars on GitHub. For our evaluation, we selected a convenience sample from the first few hundred clients in DUETS, rather than using the entire dataset of 147,991 clients.
+\textbf{Call Graph Analysis}. In static analysis, call graphs identify the function calls that the
+program will make. This technique plays a fundamental role in data flow analysis, control flow analysis,
+dead code elimination, and taint tracking~\cite{Keshani2024}. A call graph is constructed without
+executing the code, using class hierarchies, method signatures, and type information. CHA assumes
+that any method that might be invoked based on the class hierarchy and method overrides can be called.
+
+\textbf{DUETS Dataset}. The DUETS dataset~\cite{durieux21:_duets} provides a list of real-world Java
+client-library pairs. Each client in the DUETS dataset has over 5 stars on GitHub. For our evaluation,
+we selected a convenience sample from the first few hundred clients in DUETS, rather than using the
+entire dataset of 147,991 clients. The DUETS dataset provides a list of Java-based clients that are
+more actively maintained and show better community engagement, as all the projects have over 5 stars.
+It represents real-world library usage in Java-based projects.

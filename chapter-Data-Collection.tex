@@ -60,9 +60,9 @@ This process fetches both the current and the latest versions of each library us
 
 \section{Method Extraction}
 
-% We analyze the JAR file of the client application using SootUp~\cite{Karakaya24:_sootup} to extract all external method invocations performed by the client (by external, we mean to methods outside the client). Based on this set of method calls, we analyze both the version of the library that the client currently uses as well as its latest available version.
+% We analyze the JAR file of the client application using SootUp~\cite{Karakaya24:_SootUp} to extract all external method invocations performed by the client (by external, we mean to methods outside the client). Based on this set of method calls, we analyze both the version of the library that the client currently uses as well as its latest available version.
 
-UnCheckGuard then begins analyzing the clients we collected in the first step. It uses SootUp~\cite{Karakaya24:_sootup} to extract all external method invocations performed by the client (by external, we refer to methods outside the client). We store a list of all external method invocations made by the client in a \texttt{JSON} file. This file is later used to compare against the different methods within the libraries that the client uses.
+UnCheckGuard then begins analyzing the clients we collected in the first step. It uses SootUp~\cite{Karakaya24:_SootUp} to extract all external method invocations performed by the client (by external, we refer to methods outside the client). We store a list of all external method invocations made by the client in a \texttt{JSON} file. This file is later used to compare against the different methods within the libraries that the client uses.
 
 To support this comparison, we extract the list of methods present in the current version of the library. This allows us to match each external method call made by the client to its corresponding definition in the library. Using this information, we generate a JSON file that contains only the subset of library methods actually used by the client. This filtered list reduces the work necessary in subsequent steps.
 

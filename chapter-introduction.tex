@@ -18,7 +18,7 @@ institutions~\cite{Lakhani2000OSS}—develop, maintain, and upgrade software lib
 These contributors create libraries to meet specific needs and continue refining them over time.
 
 The dependence on software libraries has increased over time because of the increase in open source software
-(\texttt{OSS}) movement. Therefore, software development has become a
+{OSS} movement. Therefore, software development has become a
 highly modular activity and has a huge reliance on third-party libraries~\cite{decan2019empirical, zerouali2019formal, cox2019surviving}.
 However, libraries developed by others are also updated by others, on schedules that are not controlled by
 the client developers.
@@ -57,13 +57,14 @@ form of technical debt that accumulates automatically over time.
 However, upgrading a library to the latest version is not painless~\cite{elizalde18:_towar_smoot_librar_migrat,derr17:_keep,dann23:_upcy}:
 new versions of libraries can include breaking \gls{api} changes~\cite{dietrich14:_broken}. In the case
 of method signature-related changes, the library developer may have modified method signatures,
-retracted previously available methods, or made other syntactic changes that are no longer
+retracted previously available methods, or made other interface-level changes that are no longer
 compatible with the client code. Worse yet, non-signature related breaking changes may trigger behavioural
 changes in client application.
 A \gls{bbc} caused by a non-method signature change can result from modified function logic or
 a newly added unchecked exception in the function.
 Clients can often catch these breaking changes with the help of test cases, provided they have created
-tests to verify the behaviour of their application.
+tests to verify the behaviour of their application, especially as it relates to its
+use of the library.
 Upgrading the library can be inconvenient at best and may require nontrivial changes in the client
 code at worst. Keeping libraries upgraded ensures that the client code
 continues to work properly, and hopefully in a less-vulnerable manner.
@@ -90,7 +91,7 @@ actually used by specific client code. A new unchecked exception thrown by a lib
 constitutes a \gls{bbc}; uncaught exceptions can cause the client code to crash or
 exhibit unexpected behaviour. First, we collect all the \gls{api}s used by the client
 and analyze them for any newly added unchecked exception(s). We perform this analysis
-using static analysis tools and libraries such as Sootup~\cite{Karakaya24:_sootup},
+using static analysis tools and libraries such as SootUp~\cite{Karakaya24:_SootUp},
 Soot~\cite{vallee2010soot}, and FlowDroid~\cite{Arzt14:_flowdroid}. Then, we conduct
 a taint analysis to ensure that the unchecked exception is actually triggerable by
 the client.
@@ -107,7 +108,7 @@ the client.
 
 Developers often ignore checked exceptions~\cite{nakshatri16:_analy_java}, but we
 contend that informing developers about relevant newly added exceptions as they upgrade
-the library is likely to be more tractable, consisten with the design principles
+the library is likely to be more tractable, consistent with the design principles
 of Google’s Tricorder tool~\cite{sadowski15:_tricor}. Therefore, we utilize taint
 analysis to reduce the number of false positive reports sent to client developers.
 By doing so, the number of reported \gls{api}s shown to the client includes only
