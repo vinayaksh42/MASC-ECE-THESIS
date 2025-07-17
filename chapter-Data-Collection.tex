@@ -3,7 +3,7 @@
 %======================================================================
 % This section describes the systematic approach we used to construct the dataset for our study on behavioural incompatibilities caused by newly added unchecked exceptions in upgraded Java libraries. 
 
-This section highlights the approach we use to construct the dataset for our study on behavioural incompatibilities caused by newly added unchecked exceptions in upgraded Java libraries.
+This section describes the approach we use to construct the dataset for our study on behavioural incompatibilities caused by newly added unchecked exceptions in upgraded Java libraries.
 
 % Broadly, we require three sets of components: Java-based clients that depend on third-party libraries; the versions of the libraries declared as dependencies by these clients (``current'' versions); and the latest available versions of those same libraries (``latest'' versions). For each client-library pair, we also need to extract the set of unchecked exceptions thrown by the library methods actually used by the client.
 
@@ -24,7 +24,7 @@ With this data, UnCheckGuard reports the call sites present in the client applic
 
 % To begin our analysis, we first collected suitable client projects. We used the DUETS dataset~\cite{durieux21:_duets}, which provides a curated list of Java-based clients hosted on GitHub, each with at least five stars. DUETS also pairs libraries with the clients, but we ignore the DUETS library declarations and instead consider all of the libraries declared as dependencies by each client.
 
-To start our analysis, we created a \texttt{Python} script to collect suitable client projects. For this process, we used the DUETS dataset~\cite{durieux21:_duets}, which provides a curated list of Java-based clients hosted on GitHub. We selected this list because all Java projects in it have at least 5 stars on GitHub. We chose projects with a minimum of 5 stars as this indicates a baseline level of community engagement; better community engagement generally reflects a more actively maintained project. This approach helps us collect clients that represent real-world library usage in Java-based projects.
+To start our analysis, we created a \texttt{Python} script to collect suitable client projects. For this process, we used the DUETS dataset~\cite{durieux21:_duets}, which provides a curated list of Java-based clients hosted on GitHub. We selected this list because all Java projects in it have at least 5 stars on GitHub. The DUETS dataset includes projects with a minimum of 5 stars, as this indicates a baseline level of community engagement; stronger engagement generally reflects a more actively maintained project. This helps us collect clients that represent real-world library usage in Java-based projects.
 
 % We took a convenience sample of the first few hundred clients from DUETS rather than the entire DUETS dataset of 147,991 clients. We attempted to download each client repository and discarded any client that failed to download.
 
@@ -62,7 +62,7 @@ This process fetches both the current and the latest versions of each library us
 
 % We analyze the JAR file of the client application using SootUp~\cite{Karakaya24:_SootUp} to extract all external method invocations performed by the client (by external, we mean to methods outside the client). Based on this set of method calls, we analyze both the version of the library that the client currently uses as well as its latest available version.
 
-UnCheckGuard then begins analyzing the clients we collected in the first step. It uses SootUp~\cite{Karakaya24:_SootUp} to extract all external method invocations performed by the client (by external, we refer to methods outside the client). We store a list of all external method invocations made by the client in a \texttt{JSON} file. This file is later used to compare against the different methods within the libraries that the client uses.
+UnCheckGuard then begins analyzing the clients we collected in the first step. It uses SootUp~\cite{Karakaya24:_SootUp} to extract all external method invocations. By external methods, we mean methods that are not defined within the client's own codebase—methods whose definitions reside in third-party libraries. We store a list of all external method invocations made by the client in a \texttt{JSON} file. This file is later used to compare against the different methods within the libraries that the client uses.
 
 To support this comparison, we extract the list of methods present in the current version of the library. This allows us to match each external method call made by the client to its corresponding definition in the library. Using this information, we generate a JSON file that contains only the subset of library methods actually used by the client. This filtered list reduces the work necessary in subsequent steps.
 
