@@ -9,7 +9,7 @@ We explore the following research questions:
 
 \begin{itemize}
   \item[\textbf{RQ1:}] How often do published changes to Java libraries throw new unchecked exceptions in methods,
-and under what circumstances do such exceptions occur (e.g. major/minor/patch versions)?
+and under what circumstances do such exceptions occur (i.e. major/minor/patch versions)?
   \item[\textbf{RQ2:}]  Do library clients, in practice, call methods with new added exceptions, and is it possible for the clients to trigger these exceptions? Is it possible to write client test cases that trigger the exceptions?
 \end{itemize}
 
@@ -32,7 +32,7 @@ Exceptions with a manually-written test case & 3 \\
 \end{table}
 
 
-\section{Newly-added Unchecked Exceptions in Java Libraries}
+\section{Newly-added unchecked exceptions in Java libraries}
 
 Our evaluation included 36 client applications, which depended on 69 distinct libraries. Across these, we formed 99 client-library pairs, each corresponding to a combination of a specific client and one of the libraries that it depends on. Table~\ref{tab:version-changes} presents our clients and libraries, the number of client callsites invoking methods in the library with newly-added exceptions, and the number of these callsites that pass the taint analysis reachability filter.
 
@@ -64,21 +64,25 @@ Patch Version Change & 1 & 1 \\
 \end{tabular}
 \end{table}
 
+The results in Table~\ref{tab:version-distribution} align with the principles of semantic versioning (semver)~\cite{preston-werner23:_seman_version}, which state that breaking changes should be limited to major version upgrades. Our findings support this guideline, as 7 out of 8 libraries that introduced a client-reachable unchecked exception did so during a major version upgrade. However, the one exception—a patch-level upgrade in the \texttt{httpcore} library—highlights a concerning reality. While semantic versioning recommends that breaking changes be limited to major versions, it does not guarantee this behavior.
+
+Our results are consistent with previous findings by Jayasuriya et al.~\cite{jayasuriya23:_under_break_chang_wild,jayasuriya24}, who investigated how libraries introduce behavioural breaking changes in practice.
+
 \begin{longtable}{
-    >{\RaggedRight\arraybackslash}p{4cm}
-    >{\RaggedRight\arraybackslash\ttfamily\small}p{3cm}
-    >{\RaggedRight\arraybackslash\ttfamily\small}p{3cm}
+    H{4cm}  % Wrapping + hanging indent
+    p{3cm}  % Wrapping
+    p{3cm}  % Wrapping
     >{\RaggedLeft\arraybackslash}p{2cm}
     >{\RaggedLeft\arraybackslash}p{2cm}
 }
-\caption{Clients, libraries, versions, and counts of callsites reaching newly-added exceptions} \label{tab:version-changes} \\
+\caption{Example table with wrapping and hanging indent} \\
 \toprule
-\textbf{Client} & \textbf{Current Version} & \textbf{Latest Version} & \textbf{Number of Callsites} & \textbf{Reachable Callsites} \\
+\textbf{Client} & \textbf{Current Version} & \textbf{Latest Version} & \textbf{Calls} & \textbf{Reachable} \\
 \midrule
 \endfirsthead
 
 \toprule
-\textbf{Client} & \textbf{Current Version} & \textbf{Latest Version} & \textbf{Number of Callsites} & \textbf{Reachable Callsites} \\
+\textbf{Client} & \textbf{Current Version} & \textbf{Latest Version} & \textbf{Calls} & \textbf{Reachable} \\
 \midrule
 \endhead
 
@@ -89,9 +93,9 @@ Patch Version Change & 1 & 1 \\
 
 \bottomrule
 \endlastfoot
-95MISTAKE/sonar & \makecell{sonar-plugin-\\api-7.4} & \makecell{sonar-plugin-\\api-9.4.0.54424} & 2 & 2 \\
+95MISTAKE/sonar & sonar-plugin-api-7.4 & sonar-plugin-api-9.4.0.54424 & 2 & 2 \\
 \midrule
-\makecell{4ntoine/\\ServiceDiscovery-java} & \makecell{protobuf-java-\\2.6.1} & \makecell{protobuf-java-\\4.31.1} & 16 & 1 \\
+\makecell{4ntoine/Service\\Discovery-java} &protobuf-java-2.6.1 & protobuf-java-4.31.1 & 16 & 1 \\
 \midrule
 72crm/72crm-java & poi-3.17 & poi-5.4.1 & 30 & 1 \\
 \midrule
@@ -99,7 +103,7 @@ Patch Version Change & 1 & 1 \\
 \midrule
 269941633/spring-boot-mybatis-mysql-write-read & pagehelper-4.1.6 & pagehelper-6.1.0 & 1 & \\
 \midrule
-6ag/im-demo-netty-tcp-websocket & \makecell{netty-all-\\4.1.32.Final} & \makecell{netty-all-\\5.0.0.Alpha2} & 6 & 1 \\
+6ag/im-demo-netty-tcp-websocket & netty-all-4.1.32.Final & netty-all-5.0.0.Alpha2 & 6 & 1 \\
 \midrule
 527515025/JavaTest & maxmind-db-1.2.2 & maxmind-db-3.2.0 & 1 & \\
 \midrule
@@ -109,9 +113,9 @@ Patch Version Change & 1 & 1 \\
 \midrule
 527515025/JavaTest & jedis-2.9.0 & jedis-6.0.0 & 1 & \\
 \midrule
-72crm/72crm-java & hutool-all-4.6.8 & \makecell{hutool-all-\\5.8.38} & 3 & 1 \\
+72crm/72crm-java & hutool-all-4.6.8 & hutool-all-5.8.38 & 3 & 1 \\
 \midrule
-\makecell{a63881763/\\HttpAsyncClientUtils} & httpcore-4.4.6 & httpcore-4.4.16 & 12 & 1 \\
+\makecell{a63881763/Http\\AsyncClientUtils} & httpcore-4.4.6 & httpcore-4.4.16 & 12 & 1 \\
 \midrule
 \makecell{0RaymondJiang0/\\tushare-java} & httpcore-4.4.6 & httpcore-4.4.16 & 1 & \\
 \midrule
@@ -119,7 +123,7 @@ Patch Version Change & 1 & 1 \\
 \midrule
 527515025/JavaTest & httpclient-4.5.2 & httpclient-4.5.14 & 5 & \\
 \midrule
-\makecell{a63881763/\\HttpAsyncClientUtils} & httpclient-4.5.2 & httpclient-4.5.14 & 5 & \\
+\makecell{a63881763/Http\\AsyncClientUtils} & httpclient-4.5.2 & httpclient-4.5.14 & 5 & \\
 \midrule
 99soft/sameas4j & gson-1.6 & gson-2.13.1 & 2 & \\
 \midrule
@@ -133,27 +137,27 @@ Patch Version Change & 1 & 1 \\
 \midrule
 72crm/72crm-java & druid-1.0.29 & druid-1.2.25 & 4 & \\
 \midrule
-47degrees/firebrand & \makecell{commons-logging\\-1.1.1} & commons-logging-1.3.5 & 3 & \\
+47degrees/firebrand & commons-logging-1.1.1 & commons-logging-1.3.5 & 3 & \\
 \midrule
-2shou/HBaseObserver & \makecell{commons-logging\\-1.1.1} & commons-logging-1.3.5 & 1 & \\
+2shou/HBaseObserver & commons-logging\\-1.1.1 & commons-logging-1.3.5 & 1 & \\
 \midrule
-52North/triturus & \makecell{commons-logging\\-1.1.1} & commons-logging-1.3.5 & 3 & \\
+52North/triturus & commons-logging-1.1.1 & commons-logging-1.3.5 & 3 & \\
 \midrule
 \makecell{0RaymondJiang0/\\tushare-java} & commons-csv-1.3 & commons-csv-1.14.0 & 2 & \\
 \midrule
-9527dong/tiny-spring & \makecell{commons-beanutils-\\1.9.3} & commons-beanutils-1.11.0 & 1 & \\
+9527dong/tiny-spring & commons-beanutils-1.9.3 & commons-beanutils-1.11.0 & 1 & \\
 \midrule
-47degrees/firebrand & \makecell{commons-beanutils-\\1.8.0} & commons-beanutils-1.11.0 & 10 & \\
+47degrees/firebrand & commons-beanutils-1.8.0 & commons-beanutils-1.11.0 & 10 & \\
 \midrule
 925781609/pattern & cglib-2.2.2 & cglib-3.3.0 & 4 & \\
 \midrule
 9527dong/tiny-spring & cglib-2.2.2 & cglib-3.3.0 & 2 & 1 \\
 \midrule
-0xdecaf/beam-enrichment-patterns & \makecell{beam-sdks-java-\\io-jdbc-2.9.0} & \makecell{beam-sdks-java-\\io-jdbc-2.65.0} & 3 & \\
+0xdecaf/beam-enrichment-patterns & beam-sdks-java-io-jdbc-2.9.0 & beam-sdks-java-io-jdbc-2.65.0 & 3 & \\
 \midrule
-0xdecaf/beam-enrichment-patterns & \makecell{beam-sdks-java-io-\\google-cloud-\\platform-\\2.9.0} & \makecell{beam-sdks-java-io-\\google-cloud-\\platform-\\2.65.0} & 3 & \\
+0xdecaf/beam-enrichment-patterns & beam-sdks-java-io-google-cloud-platform-2.9.0 & beam-sdks-java-io-google-cloud-platform-2.65.0 & 3 & \\
 \midrule
-0xdecaf/beam-enrichment-patterns & \makecell{beam-sdks-\\java-core-2.9.0} & \makecell{beam-sdks-\\java-core-2.65.0} & 4 & \\
+0xdecaf/beam-enrichment-patterns & beam-sdks-java-core-2.9.0 & beam-sdks-java-core-2.65.0 & 4 & \\
 \end{longtable}
 
 
@@ -178,11 +182,11 @@ By adding taint analysis, we reduced the number of potentially affected callsite
 
 To assess the real-world consequences of these remaining 49 callsites, we manually constructed test cases. For 3 of the sites, we were able to provide inputs that trigger the newly added exceptions, confirming that they represent real behavioural breaking changes.
 
-In other cases, the exception was not triggered immediately because the client passed hardcoded values or had safeguards like null checks. While these do not cause immediate failures, they remain latent risks—future code changes could inadvertently expose the client to the newly added exceptions.
+For some of the cases, the exception was not triggered immediately because the client passed hardcoded values or had safeguards like null checks. While these do not cause immediate failures, they remain latent risks—future code changes could inadvertently expose the client to the newly added exceptions.
 
 \vspace{1em}
 \begin{tcolorbox}[colback=gray!10, colframe=black]
-\textbf{Answer RQ2:} Yes, client applications do call methods with newly added unchecked exceptions. Out of 99 client-library pairs in our corpus, we identified 49 callsites that reached newly-added exceptions, distributed across 6 of our 36 clients. We were able to construct test cases that trigger the exception in some cases.
+\textbf{Answer RQ2:} Yes, client applications do call methods with newly added unchecked exceptions. Out of 99 client-library pairs in our corpus, we identified 49 callsites that reached newly-added exceptions, distributed across 6 of our 36 clients. We were able to construct test cases that trigger the exception in 3 cases.
 \end{tcolorbox}
 \vspace{1em}
 
@@ -190,7 +194,7 @@ In other cases, the exception was not triggered immediately because the client p
 
 Behavioural breaking changes caused by unchecked exceptions during API evolution are particularly dangerous. Such changes do not show up at compile time, and they do not affect method signatures, which means that the existing tools that we are aware of cannot detect them. For instance, both japicmp and Revapi, widely used tools for detecting breaking changes, focus on syntactic differences in method signatures. While they can both flag checked exceptions—since they appear in method declarations—they do not analyze the method implementations, and thus have no way of identifying newly added unchecked exceptions. As a result, developers who rely solely on either japicmp or revapi could remain unaware of serious runtime-breaking issues.
 
-Some tools have tried to tackle the challenge of behavioural breaking changes. CompCheck~\cite{CompCheck}, for example, works by identifying test cases in some clients and reusing them for others with similar API usage. But this approach depends heavily on the presence of thorough test suites. In practice, most clients do not have such comprehensive coverage, especially not for edge cases involving unchecked exceptions.
+Some tools have tried to tackle the challenge of behavioural breaking changes. CompCheck~\cite{CompCheck}, for example, works by identifying test cases in some clients and reusing them for others with similar API usage. But this approach depends heavily on the presence of thorough test suites. In practice, most clients do not have such comprehensive coverage~\cite{jayasuriya24:_under_apis}, especially not for edge cases involving unchecked exceptions.
 
 This is where UnCheckGuard steps in. Unlike existing work, it does not rely on existing test cases. Instead, it compares the old and new versions of a library using static analysis to detect newly added unchecked exceptions, and then runs taint analysis to filter out changes that do not affect the client. By avoiding the need for a test suite, it can reveal behavioural breaking changes that other tools overlook.
 

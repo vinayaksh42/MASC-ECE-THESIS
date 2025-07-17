@@ -121,6 +121,11 @@
 \usepackage[margin=1in]{geometry}
 \usepackage{longtable}
 \usepackage{array}         % For column types
+\usepackage{calc}
+\usepackage{lipsum}
+
+% Define custom column type with hanging indent
+\newcolumntype{H}[1]{>{\hangindent=1em\hangafter=1\RaggedRight\arraybackslash}p{#1}}
 
 %\usepackage{nomencl} % For a nomenclature (optional; available from ctan.org)
 \usepackage{amsmath,amssymb,amstext} % Lots of math symbols and environments
