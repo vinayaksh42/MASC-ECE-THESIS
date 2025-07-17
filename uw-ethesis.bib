@@ -428,14 +428,24 @@ series = {ISSTA 2023}
   number = 	 2,
   month = 	 {December}}
 
-@Article{jayasuriya24:_under_apis,
-  author = 	 {Jayasuriya, Dhanushka and Terragni, Valerio and Dietrich, Jens and Blincoe, Kelly},
-  title = 	 {Understanding the impact of {APIs} behavioral breaking changes on client applications},
-  journal = 	 {Proceedings of the ACM on Software Engineering},
-  year = 	 2024,
-  volume = 	 1,
-  number = 	 FSE,
-  month = 	 {July}}
+@article{jayasuriya24:_under_apis,
+author = {Jayasuriya, Dhanushka and Terragni, Valerio and Dietrich, Jens and Blincoe, Kelly},
+title = {Understanding the Impact of APIs Behavioral Breaking Changes on Client Applications},
+year = {2024},
+issue_date = {July 2024},
+publisher = {Association for Computing Machinery},
+address = {New York, NY, USA},
+volume = {1},
+number = {FSE},
+url = {https://doi.org/10.1145/3643782},
+doi = {10.1145/3643782},
+abstract = {Libraries play a significant role in software development as they provide reusable functionality, which helps expedite the development process. As libraries evolve, they release new versions with optimisations like new functionality, bug fixes, and patches for known security vulnerabilities. To obtain these optimisations, the client applications that depend on these libraries must update to use the latest version. However, this can cause software failures in the clients if the update includes breaking changes. These breaking changes can be divided into syntactic and semantic (behavioral) breaking changes. While there has been considerable research on syntactic breaking changes introduced between library updates and their impact on client projects, there is a notable lack of research regarding behavioral breaking changes introduced during library updates and their impacts on clients.     We conducted an empirical analysis to identify the impact behavioral breaking changes have on clients by examining the impact of dependency updates on client test suites. We examined a set of java projects built using Maven, which included 30,548 dependencies under 8,086 Maven artifacts. We automatically updated out-of-date dependencies and ran the client test suites. We found that 2.30\% of these updates had behavioral breaking changes that impacted client tests. Our results show that most breaking changes were introduced during a non-Major dependency update, violating the semantic versioning scheme. We further analyzed the effects these behavioral breaking changes have on client tests. We present a taxonomy of effects related to these changes, which we broadly categorize as Test Failures and Test Errors. Our results further indicate that the library developers did not adequately document the exceptions thrown due to precondition violations.},
+journal = {Proc. ACM Softw. Eng.},
+month = jul,
+articleno = {56},
+numpages = {24},
+keywords = {behavioral breaking changes, breaking changes, software dependency, software evolution, software libraries}
+}
 
 @InProceedings{Karakaya24:_sootup,
 author="Karakaya, Kadiray
@@ -895,5 +905,29 @@ number = "1",
   bibsource    = {dblp computer science bibliography, https://dblp.org}
 }
 
+@inproceedings{Suman2016exception,
+author = {Nakshatri, Suman and Hegde, Maithri and Thandra, Sahithi},
+title = {Analysis of exception handling patterns in Java projects: an empirical study},
+year = {2016},
+isbn = {9781450341868},
+publisher = {Association for Computing Machinery},
+address = {New York, NY, USA},
+url = {https://doi.org/10.1145/2901739.2903499},
+doi = {10.1145/2901739.2903499},
+abstract = {Exception handling is a powerful tool provided by many programming languages to help developers deal with unforeseen conditions. Java is one of the few programming languages to enforce an additional compilation check on certain subclasses of the Exception class through checked exceptions. As part of this study, empirical data was extracted from software projects developed in Java. The intent is to explore how developers respond to checked exceptions and identify common patterns used by them to deal with exceptions, checked or otherwise. Bloch's book - "Effective Java" [1] was used as reference for best practices in exception handling - these recommendations were compared against results from the empirical data. Results of this study indicate that most programmers ignore checked exceptions and leave them unnoticed. Additionally, it is observed that classes higher in the exception class hierarchy are more frequently used as compared to specific exception subclasses.},
+booktitle = {Proceedings of the 13th International Conference on Mining Software Repositories},
+pages = {500–503},
+numpages = {4},
+keywords = {Boa, Github, Java exception handling, best practices},
+location = {Austin, Texas},
+series = {MSR '16}
+}
 
-
+@book{Gosling2021java,
+  title        = {The Java\textsuperscript{\texttrademark} Language Specification},
+  author       = {James Gosling and Bill Joy and Guy Steele and Gilad Bracha and Alex Buckley},
+  year         = {2021},
+  edition      = {Java SE 17 Edition},
+  publisher    = {Oracle America, Inc.},
+  url          = {https://docs.oracle.com/javase/specs/jls/se17/html/index.html}
+}
