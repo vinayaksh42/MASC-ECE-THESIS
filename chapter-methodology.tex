@@ -3,7 +3,7 @@
 %======================================================================
 The last chapter, Chapter~\ref{data}, described how we collected the clients and libraries, as well as the necessary information to perform our analysis. In this section, we describe our methodology for detecting and verifying newly added unchecked exceptions in a library when it is updated from an older version to a newer one. Our focus is on identifying the impact of such changes on client code. Specifically, we analyze client programs to detect usage of library methods that were updated to throw previously non-existent unchecked exceptions. Java distinguishes between checked exceptions, which appear as part of method signatures, and unchecked exceptions, which do not. Unchecked exceptions may therefore introduce a class of breaking changes that method signature-based syntactic approaches for Java cannot detect.
 
-After carrying out the data collection steps in Chapter~\ref{data} and extracting all external library methods invoked by the client, we next analyze their implementations, in both the current version and the latest version. This allows us to compare their behaviour across versions. If we find, through our analysis, that a method now throws a newly added unchecked exception in the latest version, and that the exception can be triggered from the client code, we flag a potential behavioural breaking change. To verify whether this change is in fact breaking, we currently manually write test cases to verify that the client may be affected by the newly introduced exception. We found that this was easy to do given the information that UnCheckGuard reports.
+After carrying out the data collection steps in Chapter~\ref{data} and extracting all external library methods invoked by the client, we next analyze their implementations, in both the current version and the latest version. This allows us to compare their behaviour across versions. Our analysis is specifically targeted at detecting one particular class of behavioral breaking changes: the introduction of new unchecked exceptions in updated library methods that the client can trigger with the client-supplied values. If we find, through our analysis, that a method now throws a newly added unchecked exception in the latest version, and that the exception can be triggered from the client code, we flag a potential behavioural breaking change. To verify whether this change is in fact breaking, we currently manually write test cases to verify that the client may be affected by the newly introduced exception. We found that this was easy to do given the information that UnCheckGuard reports. 
 
 \section{Problem Definition}
 
@@ -26,7 +26,7 @@ Our task is to identify a set of pairs $(m, e)$ where:
 
 We refer to such pairs as \textit{client-reachable newly added unchecked exceptions}, and consider them potential behavioural breaking changes.
 
-Note that we focus exclusively on \textbf{unchecked} exceptions, which do not appear in Java method signatures. Checked exceptions are excluded from this study as they are already caught by signature-diffing tool such as JapiCmp.
+Note that we focus exclusively on \textbf{unchecked} exceptions, which do not appear in Java method signatures. Checked exceptions are excluded from this study as they are already caught by signature-diffing tools such as japicmp.
 
 \section{Analysis Setup}
 
@@ -64,7 +64,7 @@ By definition, CHA reports the most conservative soundy~\cite{livshits15:_in} an
 %RTA excludes such paths because it considers only types that are actually instantiated, whereas CHA includes all potential subtype relationships, regardless of runtime feasibility.
 % we should probably make this whole discussion more concise when we have space limitations
 
-We traverse our callgraph and collect all instantiated exceptions that are subclasses of either \texttt{java.lang.RuntimeException} or \texttt{java.lang.Error}. Per the definition of the Java programming language, such exceptions represent the complete set of unchecked exceptions that the client might be newly exposed to due to the library upgrade.
+We traverse our callgraph and collect all instantiated exceptions that are subclasses of either \texttt{java.lang.RuntimeException} or \texttt{java.lang.Error}. Per the definition of the Java programming language~\cite{Gosling2021java}, such exceptions represent the complete set of unchecked exceptions that the client might be newly exposed to due to the library upgrade.
 
 \subsection{Exception Filtering with Taint Analysis}
 
@@ -217,7 +217,7 @@ In some scenarios, we are unable to trigger the exception through the client due
   \item The client may pass a hardcoded constant value to the library which does not trigger the exception.
   \item The client may apply explicit guards or checks before calling the affected library method.
 \end{itemize}
-There are thus at least two ways to fail in creating a test suite: (1) the client that we have will not trigger the exception because of how it uses the library; (2) no client can trigger the exception through the library's public API. Case (2) would be less common than case (1), since the library developers usually add an exception for a reason.
+There are thus at least two ways to fail in creating a test suite: (1) the client that we have will not trigger the exception because of how it uses the library; (2) no client can trigger the exception through the library's public API. We expect that case (2) would be less common than case (1), since the library developers usually add an exception for a reason.
 
 The potential failure to write a test case is similar in spirit to, for instance, security tools which report a number of potential vulnerabilities; the onus remains on the tool user to go from a potential vulnerability to proof-of-concept code.
 
