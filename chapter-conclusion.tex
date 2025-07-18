@@ -5,6 +5,8 @@ In this work, we demonstrated the impact of behavioural breaking changes caused 
 
 We introduced UnCheckGuard, a static analysis tool designed to detect such exceptions and help client developers avoid behavioural breaking changes. By combining extracted information with taint analysis, UnCheckGuard filters out unreachable exceptions, focusing only on those that are actually triggerable by client inputs.
 
-In our evaluation of 99 library–client pairs from the DUETS dataset, we identified 14 callsites affected by newly introduced unchecked exceptions. Notably, these issues arose not only in major library updates but also in a patch version update—highlighting the risk that developers may unknowingly introduce runtime failures even during seemingly safe updates.
+We evaluated 99 library–client pairs from the DUETS dataset. Our tool flagged 285 client callsites that invoked library methods with newly added unchecked exceptions. After applying taint analysis, we reduced this to 49 callsites that could potentially trigger an exception at runtime. We wrote manual test cases for these callsites and confirmed that 3 of them resulted in real behavioural breaking changes.
+
+These 49 callsites came from 8 distinct libraries. Of those 8 libraries, 7 introduced newly added unchecked exceptions during a major version upgrade, which aligns with the expectations of semantic versioning. However, one case occurred during a patch-level upgrade (\texttt{httpcore-4.4.6}$\rightarrow$\texttt{httpcore-4.4.16}), indicating that breaking changes can also occur in updates that developers might assume are safe.
 
 UnCheckGuard addresses a concerning gap in existing tools by targeting behavioural breaking changes due to unchecked exceptions. By statically analyzing both the library and client, it provides an effective way to catch runtime issues early and improve software robustness.
