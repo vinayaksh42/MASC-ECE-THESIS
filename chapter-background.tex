@@ -86,6 +86,10 @@ public class ThrowUncheckedExample {
 
 \textbf{Why unchecked exceptions exist}. Java includes unchecked exceptions to represent programming errors that developers should fix rather than handle using a \texttt{try-catch} block. Unchecked exceptions usually indicate issues such as invalid arguments, logic bugs, or null references. Since these exceptions reflect flaws in the program's logic, Java does not require developers to declare them in a method’s signature. This design choice helps avoid forcing developers to catch exceptions they cannot reasonably recover from.
 
+\textbf{Transitive Throwing.} Unchecked exceptions can propagate through multiple method calls without being declared. When a method throws an unchecked exception and does not catch it, the exception moves up the call chain until the program either catches it or crashes. We refer to this behavior as transitive throwing.
+
+This becomes problematic when library methods introduce new unchecked exceptions. Even if the client does not directly call the modified method, the exception can still reach client code through intermediate methods. This silent propagation of transitive unchecked exceptions can potentially cause a \gls{bbc}.
+
 \textbf{Breaking Changes}. We define a breaking change as a change in the library's \gls{api} that
 causes the client code to either break or stop functioning the way it did prior to the library upgrade.
 Breaking changes fall into two categories:
@@ -203,12 +207,92 @@ analysis is sometimes more viable for these systems, even if it has to approxima
 In taint analysis, sources (for example, client input) and sinks (for example, critical
 operations or exceptions) are declared, and then it tracks whether the sources can reach the sinks.
 
+To run this analysis, we mark client entry points (such as \texttt{main()} or exported API methods) as sources. We mark methods in the library that throw a new unchecked exception as sinks. Then, we track whether execution paths exist from the source to the sink, using static call graph traversal and method body inspection.
+
+\begin{lstlisting}[language=java]
+// Client
+public class App {
+    public static void main(String[] args) {
+        Wrapper.callService();
+    }
+}
+
+// Wrapper in client code
+class Wrapper {
+    static void callService() {
+        ExternalLib.doSomething();
+    }
+}
+
+// Library (updated version)
+public class ExternalLib {
+    public static void doSomething() {
+        throw new IllegalArgumentException("Invalid usage");
+    }
+}
+\end{lstlisting}
+
+In this example, the library method \texttt{doSomething()} throws a new unchecked exception. The client code does not call this method directly; it calls it through \texttt{Wrapper.callService()}. Taint analysis helps identify that this exception is still reachable from the client’s \texttt{main()} method. It does this by propagating the taint from the source (\texttt{main()}) through intermediate methods until it reaches the sink (\texttt{doSomething()}).
+
+This type of analysis allows us to reason about exception flow across client-library boundaries. When a new unchecked exception is added in a library, taint analysis helps determine whether the exception is observable in the client’s execution path and could lead to a \gls{bbc}.
+
 
 \textbf{Call Graph Analysis}. In static analysis, call graphs identify the function calls that the
-program will make. This technique plays a fundamental role in data flow analysis, control flow analysis,
-dead code elimination, and taint tracking~\cite{Keshani2024}. A call graph is constructed without
-executing the code, using class hierarchies, method signatures, and type information. CHA assumes
-that any method that might be invoked based on the class hierarchy and method overrides can be called.
+program will make. Nodes represent methods, and edges represent calls from one method to another.
+This technique plays a fundamental role in data flow analysis, control flow analysis,
+dead code elimination, and taint tracking~\cite{Keshani2024}.
+For example, consider the following Java program:
+\begin{lstlisting}[language=java]
+public class Example {
+    public static void main(String[] args) {
+        int n = 10;
+        int d = 0;
+        doWork(n,d);
+}
+
+public static void doWork(int n, int d) {
+    if ( d == 0){
+        throw new IllegalArgumentException("denominator cannot be zero");
+    }
+    calculate(n,d);
+}
+
+public static void calculate(int n, int d) {
+    int result = Math.floorDiv(n,d);
+}
+\end{lstlisting}
+
+\begin{figure}[h]
+\centering
+\begin{tikzpicture}[
+    node distance=1cm and 2.5cm,
+    every node/.style={draw, rounded corners, align=center, minimum height=1cm},
+    exception/.style={draw=red, thick, rounded corners, align=center, minimum height=1cm, fill=red!10},
+    libcall/.style={draw=blue, thick, rounded corners, align=center, minimum height=1cm, fill=blue!10},
+    arrow/.style={->, thick}
+]
+
+% Nodes
+\node (main) {main()};
+\node (doWork) [below=of main] {doWork(int, int)};
+\node (calculate) [below=of doWork] {calculate(int, int)};
+\node[exception] (iae) [right=of doWork] {throw \\ IllegalArgumentException};
+\node[libcall] (floorDiv) [below=of calculate] {Math.floorDiv(n, d)};
+
+% Edges
+\draw[arrow] (main) -- (doWork);
+\draw[arrow] (doWork) -- (calculate);
+\draw[arrow] (doWork) -- (iae);
+\draw[arrow] (calculate) -- (floorDiv);
+
+\end{tikzpicture}
+\caption{Call graph for the \texttt{Example} program showing method calls and exception sources.}
+\label{fig:callgraph-example}
+\end{figure}
+
+Figure~\ref{fig:callgraph-example} illustrates the call graph for the given Java program. The graph shows the sequence of method calls starting from the \texttt{main()} method, through \texttt{doWork()}, and into \texttt{calculate()}. Inside \texttt{doWork()}, a critical operations occur: a user-defined unchecked exception (\texttt{IllegalArgumentException}) is explicitly thrown when the denominator is zero.
+
+This call graph is useful in tracing the flow of potential exceptions—both user-defined and library-sourced—through the client code. If a library version introduces a new unchecked exception at any point in this call chain (e.g., inside \texttt{Math.floorDiv()}), the static call graph can help identify all the client-side methods that may now be affected by that change. This is essential for detecting \glspl{bbc}.
 
 \textbf{DUETS Dataset}. The DUETS dataset~\cite{durieux21:_duets} provides a list of real-world Java
 client-library pairs. Each client in the DUETS dataset has over 5 stars on GitHub. For our evaluation,
@@ -216,3 +300,7 @@ we selected a convenience sample from the first few hundred clients in DUETS, ra
 entire dataset of 147,991 clients. The DUETS dataset provides a list of Java-based clients that are
 more actively maintained and show better community engagement, as all the projects have over 5 stars.
 It represents real-world library usage in Java-based projects.
+
+\textbf{SootUp}. SootUp~\cite{Karakaya24:_SootUp} is a lightweight, modern Java framework built on top of Soot~\cite{vallee2010soot} that supports static analysis of Java bytecode.
+
+SootUp transforms JVM bytecode into the intermediate representation Jimple~\cite{sootup}, which simplifies analysis by converting low-level bytecode instructions into a higher-level format that captures method bodies, variable assignments, exception handling blocks, and method invocations. SootUp also provides call graph generation with various algorithms and precision levels. We use the call graph to trace the propagation of exceptions from libraries to clients. When a library method throws a new unchecked exception, we use SootUp to determine whether client methods transitively call that library method by traversing the call graph. We also use the intermediate representation to inspect methods that may throw an exception by examining throw statements and method calls within their bodies.
