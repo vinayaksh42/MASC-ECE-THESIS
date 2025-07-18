@@ -3,9 +3,9 @@
 %======================================================================
 
 In this chapter we define core concepts that underpin our approach to detecting
-\gls{bbc} caused by newly added exceptions.
+\gls{bbc}s caused by newly added exceptions.
 
-\textbf{Exception Handling}. Exception handling is a powerful tool that allows developers to recover from
+\textbf{Exception Handling}. Exception handling is a tool that allows developers to recover from
 exceptional or error conditions that may disrupt the intended flow of an application~\cite{Suman2016exception}.
 In particular, Java supports the use of \texttt{try-catch} blocks to handle exceptions.
 The following is an example of exception handling in Java using a \texttt{try-catch}
@@ -34,11 +34,10 @@ to prevent the program from crashing.
 
 \textbf{Java Exceptions}. Java defines two different types of exceptions:
 \begin{itemize}
-    \item \textbf{Checked Exception}, appears in the method's signature. When a client uses an
-    \gls{api} with a checked exception, the client either catches the exception or declares it to be
+    \item \textbf{Checked Exception}: appears in the throwing method's signature. The client must either catch the exception or declare it to be
     thrown~\cite{Sousa2020evolution}. The compiler checks this type of exception, as do several tools
     such as japicmp\footnote{https://github.com/siom79/japicmp}. The Java Language Specification~\cite{Gosling2021java}
-    formally defines the semantics of checked exceptions and compiler behavior. Following is an example
+    formally defines the semantics of checked exceptions and compiler behaviour. Following is an example
     of a checked exception:
     \begin{lstlisting}[language=java]
 public static void readFile() throws FileNotFoundException {
@@ -48,16 +47,17 @@ public static void readFile() throws FileNotFoundException {
 }
     \end{lstlisting}
     In this example, the public method \texttt{readFile()} declares that it throws an \texttt{FileNot\\FoundException},
-    it is a checked exception in Java. If the method cannot read the file \texttt{data.txt}
+    which is a checked exception in Java. If the method cannot read the file \texttt{data.txt}
     or if the file does not exist, the \texttt{FileReader} constructor\footnote{\url{https://docs.oracle.com/javase/8/docs/api/java/io/FileReader.html}} throws an \texttt{FileNotFoundException}.
     The developer must handle this exception either by using a \texttt{try-catch} block or by declaring
     it in the method signature with the \texttt{throws} keyword.
 
-    \item \textbf{Unchecked Exception}, includes subclasses of RuntimeException or Error. This type
+    \item \textbf{Unchecked Exception}: do not appear in the throwing method's
+    signature, and includes subclasses of RuntimeException or Error. This type
     of exception does not appear in the method's signature~\cite{Asaduzzaman2017}. As a result, the
-    compiler does not check it, and static tools such as japicmp do not detect it. These exceptions
+    compiler does not check it, and tools such as japicmp do not detect it. These exceptions
     can cause unexpected runtime failures when the client does not handle them correctly~\cite{Padua2017}.
-    This type of exceptions often gets overlooked by Client developers particularly during testing,
+    This type of exceptions often gets overlooked by client developers particularly during testing,
     especially when they are introduced through library upgrades. Client developers often overlook
     this type of exception during testing, especially when library upgrades introduce them. The
     addition of unchecked exceptions to newer versions of libraries can contribute to \gls{bbc}s in
@@ -84,6 +84,8 @@ public class ThrowUncheckedExample {
     to check whether the calling function handles it using a \texttt{try-catch} block.
 \end{itemize}
 
+\textbf{Why unchecked exceptions exist}. Java includes unchecked exceptions to represent programming errors that developers should fix rather than handle using a \texttt{try-catch} block. Unchecked exceptions usually indicate issues such as invalid arguments, logic bugs, or null references. Since these exceptions reflect flaws in the program's logic, Java does not require developers to declare them in a method’s signature. This design choice helps avoid forcing developers to catch exceptions they cannot reasonably recover from.
+
 \textbf{Breaking Changes}. We define a breaking change as a change in the library's \gls{api} that
 causes the client code to either break or stop functioning the way it did prior to the library upgrade.
 Breaking changes fall into two categories:
@@ -95,8 +97,8 @@ Breaking changes fall into two categories:
     can detect these types of method signature changes. The Java compiler checks for syntactic breaking
     changes during compilation but it only checks the code that is being recompiled. The Java compiler
     will not report any errors if the JAR of a library is replaced during runtime without recompiling
-    (drop-in change). Following is an exmaple of syntactic breaking change, we first present the code
-    before changes:
+    (drop-in change). An example of a syntactic breaking change follows. We first present the
+    code before changes:
     \begin{lstlisting}[language=java]
 public class MyLibrary {
     public void greet() {
@@ -115,14 +117,14 @@ public class MyLibrary {
     In this example, the original version defines the method \texttt{greet()} with no parameters. In
     the updated version, the method \texttt{greet()} requires a parameter of type \texttt{String}. If
     the client application, which used the original version, tries to recompile the code against the
-    updated version, the compiler raises a \texttt{compilation error}, indicating that no method
+    updated version, the compiler raises a compilation error, indicating that no method
     \texttt{greet()} with zero arguments exists.
 
     \item \textbf{Behavioural breaking changes (\gls{bbc})}. In this type of change, the syntax remains
     the same, but the semantics change. Various reasons can cause such changes in semantics, including
     updates to the function logic, addition of a new unchecked exception, or modification of an existing
     unchecked exception (for example, changing an \texttt{IllegalArgumentException} into a
-    \texttt{NullPointerException}). The compiler does not detect these types of changes.
+    \texttt{NullPointerException}). In general, the compiler does not detect these types of changes.
     They can cause the client's application to crash at runtime. The following is an example of a
     behavioural breaking change. We first present the original version of the method before any modifications:
 
@@ -147,14 +149,14 @@ Now, we present the updated version of the method:
 \begin{lstlisting}[language=java]
 public class FeatureToggle {
     public boolean isFeatureEnabled() {
-        return false;  // Changed behavior
+        return false;  // Changed behaviour
     }
 }
 \end{lstlisting}
 In this example, the original version of the \texttt{isFeatureEnabled} method always returns \texttt{true},
 which causes the client to print ``{New feature is active!}''. After the update, the method's logic changes
 to always return \texttt{false}. As a result, the client no longer prints the message. Although the method
-signature remains unchanged, the internal behavior differs. This change breaks the intended behaviour
+signature remains unchanged, the internal behaviour differs. This change breaks the intended behaviour
 of the client application.
 \end{itemize}
 
@@ -164,7 +166,7 @@ of the client application.
     \item \textbf{MINOR} version number indicates the introduction of new features while ensuring that everything from the previous version still works (backward compatibility).
     \item \textbf{PATCH} version number refers to bug fixes only.
 \end{itemize}
-However, in practice, developers often introduce breaking changes even in minor or patch versions~\cite{jayasuriya24:_under_apis}. This behavior makes it especially important to create and use tools that check behavioural compatibility instead of relying solely on version numbers.
+However, in practice, developers often introduce breaking changes even in minor or patch versions~\cite{jayasuriya24:_under_apis}. This behaviour makes it especially important to create and use tools that check behavioural compatibility instead of relying solely on version numbers.
 
 \textbf{Static Analysis.} Static analysis involves debugging the source code or bytecode
 of a program without executing it. Developers use it to analyze potential errors and
@@ -176,7 +178,11 @@ errors and issues that may occur during actual execution~\cite{Rahaman2023}.
 Static analysis is particularly useful in analyzing large programs, especially those that
 incorporate multiple libraries. By providing early feedback to developers,
 static analysis reduces the likelihood of errors, thereby helping to maintain the reliability
-and performance of the software.
+and performance of the software. Despite its benefits, static analysis also presents several
+drawbacks: (i) it often produces false positives, especially in complex codebases with dynamic
+behaviour such as Java reflection, dynamic class loading, or external dependencies; and (ii)
+since it analyzes code without executing it, it cannot always determine the actual execution
+path, which limits its precision.
 
 \textbf{Dynamic Analysis.} Dynamic analysis runs the actual program to observe its
 behaviour during execution. It can potentially detect runtime issue caught
@@ -189,9 +195,9 @@ occur during execution, (ii) It proves particularly useful in detecting security
 including buffer overflows, improper input handling, and unauthorized access, provided that a
 suitable test case is already present. Despite these advantages, dynamic analysis has certain limitations
 also and same are as follows: (i) Its effectiveness mainly depends on the test cases used;
-(ii) code string that is not executed during testing will not be analyzed for potential
-errors, and (iii) it may also be less practical for analyzing large-size software or
-applications~\cite{Somi2024}.
+(ii) part of code that is not executed during testing will not be analyzed for potential
+errors, and (iii) It is also sometimes hard to actually run a large software system. Static
+analysis is sometimes more viable for these systems, even if it has to approximate the behaviour.
 
 \textbf{Taint Analysis}. Taint analysis is a static or dynamic program analysis technique.
 In taint analysis, sources (for example, client input) and sinks (for example, critical
