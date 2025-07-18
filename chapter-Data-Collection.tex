@@ -3,7 +3,7 @@
 %======================================================================
 % This section describes the systematic approach we used to construct the dataset for our study on behavioural incompatibilities caused by newly added unchecked exceptions in upgraded Java libraries. 
 
-This section describes the approach we use to construct the dataset for our study on behavioural incompatibilities caused by newly added unchecked exceptions in upgraded Java libraries.
+This chapter describes the approach we use to construct the dataset for our study on behavioural incompatibilities caused by newly added unchecked exceptions in upgraded Java libraries. The data we collect creates the foundation for our analysis in subsequent chapters. Specifically, it enables UnCheckGuard to detect methods that introduce newly added unchecked exceptions, identify affected client call sites (Chapter~\ref{methodology}).
 
 % Broadly, we require three sets of components: Java-based clients that depend on third-party libraries; the versions of the libraries declared as dependencies by these clients (``current'' versions); and the latest available versions of those same libraries (``latest'' versions). For each client-library pair, we also need to extract the set of unchecked exceptions thrown by the library methods actually used by the client.
 
@@ -15,7 +15,7 @@ To collect the data mentioned above, our tool UnCheckGuard follows these steps:
 \begin{itemize}
     \item Identify suitable Java clients.
     \item Extract their library dependencies and resolve both the current and latest versions of the libraries.
-    \item Extracting methods for analysis.
+    \item Extract methods for analysis.
     \item Record all methods that introduce newly added unchecked exceptions.
 \end{itemize}
 With this data, UnCheckGuard reports the call sites present in the client application that may be affected by behavioural breaking changes during a library upgrade.
