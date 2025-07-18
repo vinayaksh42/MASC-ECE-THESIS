@@ -207,35 +207,33 @@ analysis is sometimes more viable for these systems, even if it has to approxima
 In taint analysis, sources (for example, client input) and sinks (for example, critical
 operations or exceptions) are declared, and then it tracks whether the sources can reach the sinks.
 
-To run this analysis, we mark client entry points (such as \texttt{main()} or exported API methods) as sources. We mark methods in the library that throw a new unchecked exception as sinks. Then, we track whether execution paths exist from the source to the sink, using static call graph traversal and method body inspection.
+The following example demonstrates how taint flows from a source to a sink:
 
 \begin{lstlisting}[language=java]
-// Client
-public class App {
-    public static void main(String[] args) {
-        Wrapper.callService();
+public class FlowDroidExampleCode {
+    public static String source() {
+        return "secret";
     }
-}
 
-// Wrapper in client code
-class Wrapper {
-    static void callService() {
-        ExternalLib.doSomething();
+    private void throwException(String str) {
+        throw new RuntimeException(str);
     }
-}
 
-// Library (updated version)
-public class ExternalLib {
-    public static void doSomething() {
-        throw new IllegalArgumentException("Invalid usage");
+    public void testArray3() {
+        String temp = source();
+        String[] arr = new String[2];
+        arr[0] = temp;
+        arr[1] = "hello";
+        if (arr[0] == "secret") {
+            throw new RuntimeException("hello");
+        }
     }
 }
 \end{lstlisting}
 
-In this example, the library method \texttt{doSomething()} throws a new unchecked exception. The client code does not call this method directly; it calls it through \texttt{Wrapper.callService()}. Taint analysis helps identify that this exception is still reachable from the client’s \texttt{main()} method. It does this by propagating the taint from the source (\texttt{main()}) through intermediate methods until it reaches the sink (\texttt{doSomething()}).
+In this example, the method \texttt{source()} acts as the taint source. The statement \texttt{throw new RuntimeException("hello")} is the sink. The tainted value flows into the array \texttt{arr}, and later influences the conditional that triggers the exception. Although the exception is hardcoded, the fact that its execution depends on a tainted value makes this a valid taint flow from the source to the sink.
 
-This type of analysis allows us to reason about exception flow across client-library boundaries. When a new unchecked exception is added in a library, taint analysis helps determine whether the exception is observable in the client’s execution path and could lead to a \gls{bbc}.
-
+We apply taint analysis to detect whether newly added exceptions in a library are reachable from client-supplied values. This helps us detect behavioural breaking changes where a newly added unchecked exception is only triggered under specific conditions influenced by the client.
 
 \textbf{Call Graph Analysis}. In static analysis, call graphs identify the function calls that the
 program will make. Nodes represent methods, and edges represent calls from one method to another.
