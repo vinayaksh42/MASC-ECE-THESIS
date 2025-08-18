@@ -85,7 +85,7 @@ I understand that my thesis may be made electronically available to the public.
  \begin{center}\textbf{Statement of Contributions}\end{center}
 
 This thesis primarily comprises chapters derived from our research paper which has been
-submitted at the 25th IEEE International Conference on Source Code Analysis and Manipulation (SCAM 2025), incorporating wording changes, stylistic updates, and other
+accepted at the 25th IEEE International Conference on Source Code Analysis and Manipulation (SCAM 2025), incorporating wording changes, stylistic updates, and other
 modifications.
 
 I have added the following additional work:
@@ -93,9 +93,10 @@ I have added the following additional work:
 \begin{itemize}
   \item Added information about software libraries and an overview of the thesis in Chapter~\ref{intro}.
   \item Introduced Chapter~\ref{background} to explain the core concepts related to the thesis.
-  \item Elaborated further on the motivating example in Chapter~\ref{example}, and added figures to illustrate the calls made within the library.
+  \item Elaborated further on the motivating example in Chapter~\ref{example}.
   \item Included examples and explanations on data collection in Chapter~\ref{data}.
   \item Described the problem definition and setup information related to taint analysis in Chapter~\ref{methodology}.
+  \item Added one more related work in Chapter~\ref{related}
 \end{itemize}
 
 \cleardoublepage
@@ -121,8 +122,8 @@ I have added the following additional work:
       additionally filters out new exceptions that cannot be triggered by particular clients, using taint analysis. It therefore can be
       used by client developers as a tool to screen library updates for relevant incompatibilities.
 
-      We have evaluated UnCheckGuard on 69 libraries and 99 library-client pairs drawn from the DUETS collection
-      and found 8 libraries with newly-added exceptions, as well as 49 callsites to library methods which,
+      We have evaluated UnCheckGuard on 302 libraries and 352 library-client pairs drawn from the DUETS collection
+      and found 120 libraries with newly-added exceptions, as well as 1708 callsites to library methods which,
       when upgraded to the latest version, may introduce
       a behavioural breaking change in the client due to a newly added unchecked exception. These findings
       highlight the practical value of UnCheckGuard in identifying exception-related incompatibilities

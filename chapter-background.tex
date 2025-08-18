@@ -48,7 +48,7 @@ public static void readFile() throws FileNotFoundException {
     \end{lstlisting}
     In this example, the public method \texttt{readFile()} declares that it throws an \texttt{FileNot\\FoundException},
     which is a checked exception in Java. If the method cannot read the file \texttt{data.txt}
-    or if the file does not exist, the \texttt{FileReader} constructor\footnote{\url{https://docs.oracle.com/javase/8/docs/api/java/io/FileReader.html}} throws an \texttt{FileNotFoundException}.
+    or if the file does not exist, the \texttt{FileReader} constructor\footnote{\url{https://docs.oracle.com/javase/8/docs/api/java/io/FileReader.html}} throws a \texttt{FileNotFoundException}.
     The developer must handle this exception either by using a \texttt{try-catch} block or by declaring
     it in the method signature with the \texttt{throws} keyword.
 
@@ -66,7 +66,7 @@ public static void readFile() throws FileNotFoundException {
 public class ThrowUncheckedExample {
 
     public static void main(String[] args) {
-        boolean flag = false
+        boolean flag = false;
         checkFlag(flag);
     }
 
