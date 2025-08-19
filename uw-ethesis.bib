@@ -32,7 +32,7 @@ issn = {1049-331X},
 url = {https://doi.org/10.1145/3582569},
 doi = {10.1145/3582569},
 abstract = {Modern software systems are complex, and they heavily rely on external libraries developed by different teams and organizations. Such systems suffer from higher instability due to incompatibility issues caused by library upgrades. In this article, we address the problem by investigating the impact of a library upgrade on the behaviors of its clients. We developed CompCheck, an automated upgrade compatibility checking framework that generates incompatibility-revealing tests based on previous examples. CompCheck first establishes an offline knowledge base of incompatibility issues by mining from open source projects and their upgrades. It then discovers incompatibilities for a specific client project, by searching for similar library usages in the knowledge base and generating tests to reveal the problems. We evaluated CompCheck on 202 call sites of 37 open source projects and the results show that CompCheck successfully revealed incompatibility issues on 76 call sites, 72.7\% and 94.9\% more than two existing techniques, confirming CompCheck’s applicability and effectiveness.},
-journal = {ACM Trans. Softw. Eng. Methodol.},
+journal = {ACM Transactions on Software Engineering and Methodology},
 month = may,
 articleno = {98},
 numpages = {31},
@@ -86,8 +86,8 @@ keywords = {test generation, compatibility, Software upgrade}
 
 @inproceedings{wu23:_under_threat_upstr_vulner_downs,
   author    = {Wu, Yulun and Yu, Zeliang and Wen, Ming and Li, Qiang and Zou, Deqing and Jin, Hai},
-  booktitle = {Proc. ICSE 2023},
-  title     = {Understanding the Threats of Upstream Vulnerabilities to Downstream Projects in the {Maven} Ecosystem},
+  booktitle = {ICSE '23: Proceedings of the 45th International Conference on Software Engineering},
+  title     = {Understanding the {Threats} of {Upstream} {Vulnerabilities} to {Downstream} {Projects} in the {Maven} {Ecosystem}},
   year      = 2023,
   pages     = {1046-1058},
   keywords  = {Codes;Databases;Source coding;Ecosystems;Estimation;Software systems;Libraries;Maven;Ecosystem Security;Vulnerability},
@@ -97,7 +97,7 @@ keywords = {test generation, compatibility, Software upgrade}
 @inproceedings{elizalde18:_towar_smoot_librar_migrat,
   author    = {Elizalde Zapata, Rodrigo and Kula, Raula Gaikovina and Chinthanet, Bodin and Ishio, Takashi and Matsumoto, Kenichi and Ihara, Akinori},
   booktitle = {2018 IEEE International Conference on Software Maintenance and Evolution (ICSME)},
-  title     = {Towards Smoother Library Migrations: A Look at Vulnerable Dependency Migrations at Function Level for {npm} {JavaScript} Packages},
+  title     = {Towards Smoother Library Migrations: A Look at Vulnerable Dependency Migrations at Function Level for npm {JavaScript} Packages},
   year      = 2018,
   pages     = {559-563},
   keywords  = {Libraries;Manuals;Ecosystems;Security;Inspection;Servers;Software;Third party libraries;Libraries updates;Libraries tracking},
@@ -157,16 +157,17 @@ keywords = {test generation, compatibility, Software upgrade}
   publisher = {Springer}
 }
 
-@article{alfadel23:_empir_python,
-  title     = {Empirical analysis of security vulnerabilities in {Python} packages},
-  author    = {Alfadel, Mahmoud and Costa, Diego Elias and Shihab, Emad},
-  journal   = {Empirical Software Engineering},
-  volume    = 28,
-  number    = 3,
-  pages     = 59,
-  year      = 2023,
-  publisher = {Springer}
-}
+@INPROCEEDINGS{alfadel23:_empir_python,
+  author={Alfadel, Mahmoud and Costa, Diego Elias and Shihab, Emad},
+  booktitle={2021 IEEE International Conference on Software Analysis, Evolution and Reengineering (SANER)}, 
+  title={Empirical {Analysis} of {Security} {Vulnerabilities} in {Python} {Packages}}, 
+  year={2021},
+  volume={},
+  number={},
+  pages={446-457},
+  keywords={Software packages;Conferences;Ecosystems;Tools;Software systems;Software;Timing;python;pypi;packages;vulnerabilities;empirical studies},
+  doi={10.1109/SANER50967.2021.00048}}
+
 
 @inproceedings{derr17:_keep,
   title     = {Keep me updated: An empirical study of third-party library updatability on {Android}},
@@ -323,7 +324,7 @@ keywords = {test generation, compatibility, Software upgrade}
   url        = {https://doi.org/10.1145/2644805},
   doi        = {10.1145/2644805},
   abstract   = {Soundy is the new sound.},
-  journal    = {Commun. ACM},
+  journal    = {Communications of the ACM},
   month      = {jan},
   pages      = {44–46},
   numpages   = 3
@@ -428,24 +429,16 @@ series = {ISSTA 2023}
   number = 	 2,
   month = 	 {December}}
 
-@article{jayasuriya24:_under_apis,
-author = {Jayasuriya, Dhanushka and Terragni, Valerio and Dietrich, Jens and Blincoe, Kelly},
-title = {Understanding the Impact of {APIs} Behavioral Breaking Changes on Client Applications},
-year = {2024},
-issue_date = {July 2024},
-publisher = {Association for Computing Machinery},
-address = {New York, NY, USA},
-volume = {1},
-number = {FSE},
-url = {https://doi.org/10.1145/3643782},
-doi = {10.1145/3643782},
-abstract = {Libraries play a significant role in software development as they provide reusable functionality, which helps expedite the development process. As libraries evolve, they release new versions with optimisations like new functionality, bug fixes, and patches for known security vulnerabilities. To obtain these optimisations, the client applications that depend on these libraries must update to use the latest version. However, this can cause software failures in the clients if the update includes breaking changes. These breaking changes can be divided into syntactic and semantic (behavioral) breaking changes. While there has been considerable research on syntactic breaking changes introduced between library updates and their impact on client projects, there is a notable lack of research regarding behavioral breaking changes introduced during library updates and their impacts on clients.     We conducted an empirical analysis to identify the impact behavioral breaking changes have on clients by examining the impact of dependency updates on client test suites. We examined a set of java projects built using Maven, which included 30,548 dependencies under 8,086 Maven artifacts. We automatically updated out-of-date dependencies and ran the client test suites. We found that 2.30\% of these updates had behavioral breaking changes that impacted client tests. Our results show that most breaking changes were introduced during a non-Major dependency update, violating the semantic versioning scheme. We further analyzed the effects these behavioral breaking changes have on client tests. We present a taxonomy of effects related to these changes, which we broadly categorize as Test Failures and Test Errors. Our results further indicate that the library developers did not adequately document the exceptions thrown due to precondition violations.},
-journal = {Proc. ACM Softw. Eng.},
-month = jul,
-articleno = {56},
-numpages = {24},
-keywords = {behavioral breaking changes, breaking changes, software dependency, software evolution, software libraries}
-}
+
+@Article{jayasuriya24:_under_apis,
+  author = 	 {Jayasuriya, Dhanushka and Terragni, Valerio and Dietrich, Jens and Blincoe, Kelly},
+  title = 	 {Understanding the impact of {APIs} behavioral breaking changes on client applications},
+  journal = 	 {Proceedings of the ACM on Software Engineering},
+  year = 	 2024,
+  volume = 	 1,
+  number = 	 {FSE},
+  pages =        {1238--1261},
+  month = 	 {July}}
 
 @InProceedings{Karakaya24:_SootUp,
 author="Karakaya, Kadiray
@@ -457,7 +450,7 @@ and Luo, Linghui
 and He, Dongjie",
 editor="Finkbeiner, Bernd
 and Kov{\'a}cs, Laura",
-title="SootUp: A Redesign of the Soot Static Analysis Framework",
+title="SootUp: A Redesign of the {Soot} {Static} {Analysis} {Framework}",
 booktitle="Tools and Algorithms for the Construction and Analysis of Systems",
 year="2024",
 publisher="Springer Nature Switzerland",
@@ -467,7 +460,7 @@ isbn="978-3-031-57246-3"
 }
 @inproceedings{Arzt14:_flowdroid,
 author = {Arzt, Steven and Rasthofer, Siegfried and Fritz, Christian and Bodden, Eric and Bartel, Alexandre and Klein, Jacques and Le Traon, Yves and Octeau, Damien and McDaniel, Patrick},
-title = {FlowDroid: precise context, flow, field, object-sensitive and lifecycle-aware taint analysis for Android apps},
+title = {{FlowDroid}: precise context, flow, field, object-sensitive and lifecycle-aware taint analysis for {Android} apps},
 year = {2014},
 isbn = {9781450327848},
 publisher = {Association for Computing Machinery},
@@ -532,17 +525,29 @@ Conclusion
 It is concluded that API instability is common and causes problems for programs using these APIs. Therefore, better tools and methods are needed to safeguard library evolution.}
 }
   
-@InProceedings{foo18:_effic_static_check_librar_updat,
-  author = 	 {Darius Foo and Hendy Chua and Jason Yeo and Ang Ming Yi and Asankhaya Sharma},
-  title = 	 {Efficient Static Checking of Library Updates},
-  booktitle = {ESEC/FSE '18},
-  year = 	 2018}
 
+@inproceedings{foo18:_effic_static_check_librar_updat,
+author = {Foo, Darius and Chua, Hendy and Yeo, Jason and Ang, Ming Yi and Sharma, Asankhaya},
+title = {Efficient static checking of library updates},
+year = {2018},
+isbn = {9781450355735},
+publisher = {Association for Computing Machinery},
+address = {New York, NY, USA},
+url = {https://doi.org/10.1145/3236024.3275535},
+doi = {10.1145/3236024.3275535},
+abstract = {Software engineering practices have evolved to the point where a developer writing a new application today doesn’t start from scratch, but reuses a number of open source libraries and components. These third-party libraries evolve independently of the applications in which they are used, and may not maintain stable interfaces as bugs and vulnerabilities in them are fixed. This in turn causes API incompatibilities in downstream applications which must be manually resolved. Oversight here may manifest in many ways, from test failures to crashes at runtime. To address this problem, we present a static analysis for automatically and efficiently checking if a library upgrade introduces an API incompatibility. Our analysis does not rely on reported version information from library developers, and instead computes the actual differences between methods in libraries across different versions. The analysis is scalable, enabling real-time diff queries involving arbitrary pairs of library versions. It supports a vulnerability remediation product which suggests library upgrades automatically and is lightweight enough to be part of a continuous integration/delivery (CI/CD) pipeline. To evaluate the effectiveness of our approach, we determine semantic versioning adherence of a corpus of open source libraries taken from Maven Central, PyPI, and RubyGems. We find that on average, 26\% of library versions are in violation of semantic versioning. We also analyze a collection of popular open source projects from GitHub to determine if we can automatically update libraries in them without causing API incompatibilities. Our results indicate that we can suggest upgrades automatically for 10\% of the libraries.},
+booktitle = {Proceedings of the 2018 26th ACM Joint Meeting on European Software Engineering Conference and Symposium on the Foundations of Software Engineering},
+pages = {791–796},
+numpages = {6},
+keywords = {api diffs, automated remediation, call graphs, library upgrades, semantic versioning},
+location = {Lake Buena Vista, FL, USA},
+series = {ESEC/FSE 2018}
+}
 
 @InProceedings{møller20:_detec_locat_javas_progr_affec,
   author = 	 {Anders Møller and Benjamin Barslev Nielsen and Martin Toldam Torp},
   title = 	 {Detecting Locations in {JavaScript} Programs Affected by Breaking Library Changes},
-  booktitle = {Proc. ACM Program. Lang.},
+  booktitle = {Proceedings of the ACM on Programming Languages},
   year = 	 2020,
   volume = 	 4,
   number = 	 {OOPSLA},
@@ -580,7 +585,7 @@ It is concluded that API instability is common and causes problems for programs 
 
 @Article{kong25:_towar_better_compr_break_chang_npm_ecosy,
   author = 	 {Denzhen Kong and Jiakun Liu and Lingfeng Bao and David Lo},
-  title = 	 {Toward Better Comprehension of Breaking Changes in the {NPM} Ecosystem},
+  title = 	 {Toward Better Comprehension of Breaking Changes in the npm Ecosystem},
   journal = 	 {ACM Transactions on Software Engineering and Methodology},
   year = 	 2025,
   volume = 	 34,
@@ -615,7 +620,7 @@ series = {MSR '16}
 }
 
 @article{decan2019empirical,
-  title={An empirical comparison of dependency issues in OSS packaging ecosystems},
+  title={An empirical comparison of dependency issues in {OSS} packaging ecosystems},
   author={Decan, Alexandre and Mens, Tom and Constantinou, Eleni},
   journal={Empirical Software Engineering},
   volume={24},
@@ -645,14 +650,22 @@ series = {MSR '16}
 }
 
 @article{cox2019surviving,
-  title={Surviving software dependencies},
-  author={Cox, Russ},
-  journal={Communications of the ACM},
-  volume={62},
-  number={9},
-  pages={36--43},
-  year={2019},
-  publisher={ACM}
+author = {Cox, Russ},
+title = {Surviving software dependencies},
+year = {2019},
+issue_date = {September 2019},
+publisher = {Association for Computing Machinery},
+address = {New York, NY, USA},
+volume = {62},
+number = {9},
+issn = {0001-0782},
+url = {https://doi.org/10.1145/3347446},
+doi = {10.1145/3347446},
+abstract = {Software reuse is finally here but comes with risks.},
+journal = {Communications of the ACM},
+month = aug,
+pages = {36–43},
+numpages = {8}
 }
 
 @inproceedings{Sawant2015APIUsage,
@@ -722,23 +735,30 @@ journal = {Journal of the Brazilian Computer Society},
 doi = {10.1186/s13173-019-0095-5}
 }
 
-@inproceedings{Asaduzzaman2017,
-author = {Asaduzzaman, Muhammad and Ahasanuzzaman, Md and Roy, Chanchal and Schneider, Kevin},
-year = {2017},
-month = {03},
-pages = {},
-title = {How developers use exception handling in Java?},
-doi = {10.1145/2901739.2903500}
-}
+@INPROCEEDINGS{Asaduzzaman2017,
+  author={Asaduzzaman, Muhammad and Ahasanuzzaman, Muhammad and Roy, Chanchal K. and Schneider, Kevin A.},
+  booktitle={2016 IEEE/ACM 13th Working Conference on Mining Software Repositories (MSR)}, 
+  title={How {Developers} {Use} {Exception} {Handling} in {Java}?}, 
+  year={2016},
+  volume={},
+  number={},
+  pages={516-519},
+  keywords={Java;Encoding;Software;Data mining;Runtime;Servers;Java;exception;language feature;source code mining},
+  doi={}}
 
-@inproceedings{Padua2017,
-author = {B. de Pádua, Guilherme and Shang, Weiyi},
-year = {2017},
-month = {09},
-pages = {11-20},
-title = {Revisiting Exception Handling Practices with Exception Flow Analysis},
-doi = {10.1109/SCAM.2017.16}
-}
+
+
+@INPROCEEDINGS{Padua2017,
+  author={de Pádua, Guilherme B. and Shang, Weiyi},
+  booktitle={2017 IEEE 17th International Working Conference on Source Code Analysis and Manipulation (SCAM)}, 
+  title={Revisiting Exception Handling Practices with Exception Flow Analysis}, 
+  year={2017},
+  volume={},
+  number={},
+  pages={11-20},
+  keywords={Java;C# languages;Documentation;Software;Libraries;Tools;Software engineering;source code analysis;exception flow analysis;exception handling;software engineering},
+  doi={10.1109/SCAM.2017.16}}
+
 
 @inproceedings{Cossette2012,
 author = {Cossette, Bradley and Walker, Robert},
@@ -848,7 +868,7 @@ number = {1},
 issn = {0361-7688},
 url = {https://doi.org/10.1134/S0361768824010079},
 doi = {10.1134/S0361768824010079},
-journal = {Program. Comput. Softw.},
+journal = {Programming and Computer Software},
 month = feb,
 pages = {90–114},
 numpages = {25},
@@ -893,7 +913,7 @@ number = "1",
 @article{Bommarito2019,
   author       = {Ethan Bommarito and
                   Michael J. Bommarito II},
-  title        = {An Empirical Analysis of the Python Package Index (PyPI)},
+  title        = {An Empirical Analysis of the {Python} {Package} {Index} ({PyPI})},
   journal      = {CoRR},
   volume       = {abs/1907.11073},
   year         = {2019},
@@ -907,7 +927,7 @@ number = "1",
 
 @inproceedings{Suman2016exception,
 author = {Nakshatri, Suman and Hegde, Maithri and Thandra, Sahithi},
-title = {Analysis of exception handling patterns in Java projects: an empirical study},
+title = {Analysis of exception handling patterns in {Java} projects: an empirical study},
 year = {2016},
 isbn = {9781450341868},
 publisher = {Association for Computing Machinery},

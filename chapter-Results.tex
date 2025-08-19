@@ -1,5 +1,5 @@
 %======================================================================
-\chapter{Results}
+\chapter{Results}\label{results}
 %======================================================================
 As discussed in Chapter~\ref{data}, we evaluated UnCheckGuard on 1011 Java-based clients from the DUETS dataset~\cite{durieux21:_duets}.
 
@@ -35,7 +35,7 @@ Exceptions passing taint analysis & 1708 \\
 
 \section{Client Calls to Newly-added Exceptions}
 
-Our evaluation includes 1011 client applications, which depend on 302 distinct libraries. Across these, we formed 352 client-library pairs in which the library had an available upgrade, each corresponding to a combination of a specific client and one of the libraries that it depends on. Table~\ref{tab:longtable} presents the top 15 client-library pairs, ordered in descending number of callsites that pass the taint analysis reachability filter; for each pair, it also presents the number of client callsites invoking library methods with newly-added exceptions.
+Our evaluation includes 1011 client applications, which depend on 302 distinct libraries. Across these, we formed 352 client-library pairs in which the library had an available upgrade, each corresponding to a combination of a specific client and one of the libraries that it depends on. Table~\ref{tab:longtable} presents the client-library pairs, ordered in descending number of callsites that pass the taint analysis reachability filter; for each pair, it also presents the number of client callsites invoking library methods with newly-added exceptions.
 
 UnCheckGuard detected 15678 callsites across these 352 pairs where the upgraded version of the library could throw a new unchecked exception.
 We initially tried to write test cases for these callsites but found ourselves unable to write test cases that could trigger

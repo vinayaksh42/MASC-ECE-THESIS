@@ -25,7 +25,7 @@ public class ExceptionHandlingExample {
 \end{lstlisting}
 
 In the above example, dividing 10 by 0 using \texttt{Math.floorDiv} throws an
-\texttt{ArithmeticException}, as specified in the official documentation of the
+\texttt{\seqsplit{ArithmeticException}}, as specified in the official documentation of the
 \texttt{Math} class in the Java Standard Library.\footnote{\url{https://docs.oracle.com/javase/8/docs/api/java/lang/Math.html}}
 The \texttt{try-catch} blocks catch and handle the \texttt{ArithmeticException}
 to prevent the program from crashing.
@@ -36,7 +36,7 @@ to prevent the program from crashing.
 \begin{itemize}
     \item \textbf{Checked Exception}: appears in the throwing method's signature. The client must either catch the exception or declare it to be
     thrown~\cite{Sousa2020evolution}. The compiler checks this type of exception, as do several tools
-    such as japicmp\footnote{https://github.com/siom79/japicmp}. The Java Language Specification~\cite{Gosling2021java}
+    such as japicmp\footnote{\url{https://github.com/siom79/japicmp}}. The Java Language Specification~\cite{Gosling2021java}
     formally defines the semantics of checked exceptions and compiler behaviour. Following is an example
     of a checked exception:
     \begin{lstlisting}[language=java]
@@ -46,7 +46,7 @@ public static void readFile() throws FileNotFoundException {
     file.close();
 }
     \end{lstlisting}
-    In this example, the public method \texttt{readFile()} declares that it throws an \texttt{FileNot\\FoundException},
+    In this example, the public method \texttt{readFile()} declares that it throws an \texttt{\seqsplit{FileNotFoundException}},
     which is a checked exception in Java. If the method cannot read the file \texttt{data.txt}
     or if the file does not exist, the \texttt{FileReader} constructor\footnote{\url{https://docs.oracle.com/javase/8/docs/api/java/io/FileReader.html}} throws a \texttt{FileNotFoundException}.
     The developer must handle this exception either by using a \texttt{try-catch} block or by declaring
@@ -78,8 +78,8 @@ public class ThrowUncheckedExample {
     }
 }
     \end{lstlisting}
-    In this example, the method \texttt{checkFlag} explicitly throws an \texttt{IllegalArgument\\Exception},
-    which is an unchecked exception. Since it is a subclass of \texttt{Runtime\\Exception}, the Java compiler
+    In this example, the method \texttt{checkFlag} explicitly throws an \texttt{\seqsplit{IllegalArgumentException}},
+    which is an unchecked exception. Since it is a subclass of \texttt{\seqsplit{RuntimeException}}, the Java compiler
     does not require the \texttt{checkFlag} method to declare it using the \texttt{throws} keyword or
     to check whether the calling function handles it using a \texttt{try-catch} block.
 \end{itemize}
@@ -94,7 +94,7 @@ This becomes problematic when library methods introduce new unchecked exceptions
 causes the client code to either break or stop functioning the way it did prior to the library upgrade.
 Breaking changes fall into two categories:
 \begin{itemize}
-    \item \textbf{Syntactic breaking changes}. This type of change usually occurs when the method's
+    \item \textbf{Syntactic Breaking Changes}. This type of change usually occurs when the method
     signature changes. Library developers may change the method's signature by removing or updating
     the function name, modifying the input parameters, changing the checked exception(s) associated
     with the function, or altering the return type~\cite{jayasuriya24}. Static tools like japicmp
@@ -124,7 +124,7 @@ public class MyLibrary {
     updated version, the compiler raises a compilation error, indicating that no method
     \texttt{greet()} with zero arguments exists.
 
-    \item \textbf{Behavioural breaking changes (\gls{bbc})}. In this type of change, the syntax remains
+    \item \textbf{Behavioural Breaking Changes (\gls{bbc})}. In this type of change, the syntax remains
     the same, but the semantics change. Various reasons can cause such changes in semantics, including
     updates to the function logic, addition of a new unchecked exception, or modification of an existing
     unchecked exception (for example, changing an \texttt{IllegalArgumentException} into a
@@ -281,11 +281,11 @@ public static void calculate(int n, int d) {
 
 Figure~\ref{fig:callgraph-example} illustrates the call graph for the given Java program. The graph shows the sequence of method calls starting from the \texttt{main()} method, through \texttt{doWork()}, and into \texttt{calculate()}. Inside \texttt{doWork()}, a critical operations occur: a user-defined unchecked exception (\texttt{IllegalArgumentException}) is explicitly thrown when the denominator is zero.
 
-This call graph is useful in tracing the flow of potential exceptions—both user-defined and library-sourced—through the client code. If a library version introduces a new unchecked exception at any point in this call chain (e.g., inside \texttt{Math.floorDiv()}), the static call graph can help identify all the client-side methods that may now be affected by that change. This is essential for detecting \glspl{bbc}.
+This call graph is useful in tracing the flow of potential exceptions-both user-defined and library-sourced-through the client code. If a library version introduces a new unchecked exception at any point in this call chain (e.g., inside \texttt{Math.floorDiv()}), the static call graph can help identify all the client-side methods that may now be affected by that change. This is essential for detecting \glspl{bbc}.
 
 \textbf{DUETS Dataset}. The DUETS dataset~\cite{durieux21:_duets} provides a list of real-world Java
 client-library pairs. Each client in the DUETS dataset has over 5 stars on GitHub. For our evaluation,
-we selected a convenience sample from the first few hundred clients in DUETS, rather than using the
+we selected 1011 clients from DUETS in a systematic manner, rather than using the
 entire dataset of 147,991 clients. The DUETS dataset provides a list of Java-based clients that are
 more actively maintained and show better community engagement, as all the projects have over 5 stars.
 It represents real-world library usage in Java-based projects.
