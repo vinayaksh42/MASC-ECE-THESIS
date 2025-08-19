@@ -261,7 +261,28 @@ In this example, the parameter \texttt{input} is the taint source, and the \text
 
 In terms of our methodology, for methods that appear in both the current and latest versions of the library, we compare the sets of unchecked exceptions that they throw, filter using taint analysis, and then diff to identify new exceptions (in the next stage). So, if the current version has unreachable exception E which becomes reachable in the latest version, but E was present in both versions, then we report E. (If a \emph{method} exists in the current library version but is missing from the latest version, we exclude it from our analysis. Its removal may indicate a method signature-based breaking change, but those are handled by existing tools and lie outside the scope of our detection. Our work only detects changes to the set of exceptions that are thrown.)
 
-We compare exceptions using both the exception type (e.g., \texttt{java.lang.IllegalArgumentException}) and the fully-qualified signature of the method in which the exception occurs. If, after removing all exceptions common to both versions, the method in the latest version still contains additional unchecked exceptions, we classify it as a method with a newly-added unchecked exception. Otherwise, we discard it from consideration; our technique sees no new exception-related behavioural breaking changes for this method.
+We compare exceptions using both the exception type (e.g., \texttt{java.lang.Illegal\\ArgumentException}) and the fully-qualified signature of the method in which the exception occurs. If, after removing all exceptions common to both versions, the method in the latest version still contains additional unchecked exceptions, we classify it as a method with a newly-added unchecked exception. Otherwise, we discard it from consideration; our technique sees no new exception-related behavioural breaking changes for this method.
+
+After collecting the unchecked exceptions from both versions of the library, we store the list of exceptions present in each method in a \texttt{JSON} file. We use the following format to store this information:
+\begin{lstlisting}[language=python]
+[
+    ...
+    {"org.apache.http.HttpHost": [{
+        "methodSignature": "<org.apache.http.HttpHost: void <init>(java.lang.String,int)>",
+        "unchecked_exceptions": [
+            "java.lang.IllegalArgumentException <org.apache.http.util.Args: java.lang.CharSequence containsNoBlanks(java.lang.CharSequence,java.lang.String)>",
+            "java.lang.IllegalArgumentException <org.apache.http.util.Args: java.lang.CharSequence containsNoBlanks(java.lang.CharSequence,java.lang.String)>"
+        ]
+    }]},
+    ...
+]
+\end{lstlisting}
+
+This \texttt{JSON} file contains a list of classes in the library. For each class, it includes a list of methods, and for each method, it stores two fields: \texttt{methodSignature}, which holds the method’s signature, and \texttt{unchecked\_exceptions}, which lists all unchecked exceptions associated with the method. The tool uses this \texttt{JSON} file to compare the current and latest versions of the library.
+
+% Our tool detects newly added unchecked exceptions by scanning method implementations, and approximates their reachability from the client using taint analysis. After collecting the unchecked exceptions from both the current and the latest versions of the library, we compare the sets of exceptions associated with each method in the library. We remove any duplicate exceptions that appear in both versions. If a method in the latest version throws an exception that was not present in the older version, we tag that method as having a newly added unchecked exception. Note that our methodology does not detect instances where the same exception is thrown by a method, but under new circumstances.
+
+This output enables our tool to highlight call sites in the client application that may exhibit behavioural breaking changes, helping developers assess the impact of upgrading their dependencies.
 
 \section{Filtering Untriggerable Unchecked Exceptions}
 
