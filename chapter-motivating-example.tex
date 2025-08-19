@@ -8,7 +8,7 @@ We also demonstrate how we wrote a test case to verify the behavioural breaking 
 caused by the updated library.
 
 For this motivating example, we use \texttt{HttpAsyncClientUtils}\footnote{\url{https://github.com/iiweniiang/HttpAsyncClientUtils}}
-as our client. which is one of the clients in DUETS. It declares version 4.4.6 of the \texttt{httpcore}
+as our client. Which is one of the clients in DUETS. It declares version 4.4.6 of the \texttt{httpcore}
 library\footnote{\url{https://hc.apache.org/index.html}} as one of its dependencies. Since the release of version 4.4.6, the developers of the \texttt{httpcore}
 library have released several newer versions. The latest available version is 4.4.16.\footnote{While
 \texttt{httpcore} 5.2.4 is in fact the latest version of this library, the library developers have
@@ -87,7 +87,7 @@ Upon a manual inspection of the static method \texttt{Args.containsNoBlanks()}, 
     }
 \end{lstlisting}
 
-Specifically, all \texttt{HttpHost} constructors take a \texttt{hostname} parameter and call \texttt{containsNoBlanks()}
+Specifically, all \texttt{HttpHost} constructors take a \texttt{hostname} parameter and call \texttt{contains\\NoBlanks()}
 with that parameter (to check that it contains no blanks). In the case when the length of the argument (\texttt{host}) is equal to zero it throws a unchecked exception \texttt{IllegalArgumentException}. A client can therefore trigger this newly added exception
 in a client by attempting to instantiate a new \texttt{HttpHost} object and passing it an empty
 \texttt{hostname}.
